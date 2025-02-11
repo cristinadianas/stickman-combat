@@ -67,7 +67,7 @@ constexpr float MAX_SWITCH_TIME = 1.0f / 20.0f;
 class Animation {
 public:
     Animation(sf::Texture *texture, sf::Vector2i imageCount_, float switchTime_) :
-                imageCount(imageCount_), switchTime(switchTime_)
+            imageCount(imageCount_), switchTime(switchTime_)
     {
         totalTime = 0.0f;
         currentImage.x = 0;
@@ -76,7 +76,25 @@ public:
         uvRect.height = (int) (texture->getSize().y / imageCount.y);
     };
 
-    ~Animation()= default;
+    ~Animation() {
+        std::cout << "Destr Animation\n";
+    };
+
+    Animation(const Animation& other) : imageCount{other.imageCount}, currentImage{other.currentImage},
+                                        uvRect{other.uvRect}, totalTime{other.totalTime}, switchTime{other.switchTime} {
+        std::cout << "Constr de copiere Animation\n";
+    }
+
+    Animation& operator=(const Animation& other) {
+        imageCount = other.imageCount;
+        currentImage = other.currentImage;
+        uvRect = other.uvRect;
+        totalTime = other.totalTime;
+        switchTime = other.switchTime;
+
+        std::cout << "operator= copiere Animation\n";
+        return *this;
+    }
 
     sf::IntRect GetUVRect() const {
         return uvRect;
@@ -103,6 +121,13 @@ public:
             uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
             uvRect.width = -abs(uvRect.width);
         }
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const Animation& animation) {
+        os << "Number of rows: " << animation.imageCount.y << "\n";
+        os << "Number of frames per row: " << animation.imageCount.x << "\n";
+        os << "Time per frame: " << animation.switchTime << " seconds\n";
+        return os;
     }
 
 private:
@@ -187,6 +212,12 @@ public:
         return false;
     }
 
+    friend std::ostream& operator<<(std::ostream& os, const Collider& collider) {
+        os << "Pozitie collider: " << collider.GetPosition().x << ", " << collider.GetPosition().y
+           << ", Half size collider: " << collider.GetHalfSize().x << ", " << collider.GetHalfSize().y << "\n";
+        return os;
+    }
+
 private:
     sf::RectangleShape& body;
 };
@@ -217,6 +248,13 @@ public:
 
     void Draw(sf::RenderWindow &window) const {
         window.draw(body);
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const Indicator& indicator) {
+        os << "Indicator at position " << indicator.body.getPosition().x << ", "
+           << indicator.body.getPosition().y << " is in the animation from row "
+           << indicator.row << ".\n";
+        return os;
     }
 
 private:
@@ -254,6 +292,13 @@ public:
         return Collider{body};
     }
 
+    friend std::ostream& operator<<(std::ostream& os, const Platform& platform) {
+        os << "Platform at position " << platform.body.getPosition().x << ", "
+           << platform.body.getPosition().y << " is in the animation from row "
+           << platform.row << ".\n";
+        return os;
+    }
+
 private:
     int row;
     sf::RectangleShape body;
@@ -264,7 +309,7 @@ private:
 class HealthBar {
 public:
     HealthBar(int nrHearts_, sf::Vector2f startPosition_, bool goRight_) :
-                nrHearts(nrHearts_), startPosition(startPosition_), goRight(goRight_) {};
+            nrHearts(nrHearts_), startPosition(startPosition_), goRight(goRight_) {};
 
     ~HealthBar()= default;
 
@@ -309,6 +354,11 @@ public:
     void Draw(sf::RenderWindow & window) const {
         for (int i = 0; i < nrHearts; i++)
             hearts[i].Draw(window);
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const HealthBar& healthBar) {
+        os << "Remaining hearts: " << healthBar.nrHearts << "\n";
+        return os;
     }
 
 private:
@@ -539,6 +589,13 @@ public:
         return name;
     }
 
+    friend std::ostream& operator<<(std::ostream& os, const Player& player) {
+        os << "Name: " << player.name.toAnsiString() << ", Status: " << (player.IsDead() ? ("Dead") : ("Alive"))
+           << ", Position: " << player.GetPosition().x << ", " << player.GetPosition().y << ", Remaining Health: "
+           << player.RemainingHearts() << "\n";
+        return os;
+    }
+
 private:
     sf::String name;
     sf::RectangleShape body;
@@ -589,6 +646,19 @@ public:
                 player1.TakeHit();
             }
         }
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const Fight& fight) {
+        os << "Fight between " << fight.player1.GetName().toAnsiString() << " and "
+           << fight.player2.GetName().toAnsiString() << "! ";
+
+        if (fight.player1.RemainingHearts() > fight.player2.RemainingHearts())
+            os << fight.player1.GetName().toAnsiString() << " is more likely to win!";
+        else if (fight.player1.RemainingHearts() < fight.player2.RemainingHearts())
+            os << fight.player2.GetName().toAnsiString() << " is more likely to win!";
+        else os << "Equal chances to win!\n";
+
+        return os;
     }
 
 private:
@@ -712,10 +782,24 @@ int main() {
                       sf::Vector2f(0.0f, WINDOW_HEIGHT / 2.0f));
     Platform rightWall(&transparentTexture, singleImageCount, 0.0f,
                        sf::Vector2f (0.1f, WINDOW_HEIGHT),
-                      sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT / 2.0f));
+                       sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT / 2.0f));
 
     float deltaTime = 0.0f;
     sf::Clock clock;
+
+    // operator=
+    Animation a1(&transparentTexture, singleImageCount, 0.0f);
+    Animation a2(&transparentTexture, singleImageCount, 0.1f);
+    a2 = a1;
+
+    // Afisari
+    std::cout << player1;
+    std::cout << player2;
+    std::cout << fight;
+    std::cout << fightBanner;
+    std::cout << ground;
+    std::cout << leftWall;
+    std::cout << rightWall;
 
     // Game loop
     while (window.isOpen()) {
@@ -745,3 +829,4 @@ int main() {
 
     return 0;
 }
+
