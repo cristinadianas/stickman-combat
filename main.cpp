@@ -732,17 +732,17 @@ int main() {
 
     // Get all the textures
     sf::Texture playerTexture;
-    playerTexture.loadFromFile("/Users/cristinasavin/CLionProjects/stickman-combat/textures/player_texture.png");
+    playerTexture.loadFromFile("textures/player_texture.png");
     sf::Texture transparentTexture;
-    transparentTexture.loadFromFile("/Users/cristinasavin/CLionProjects/stickman-combat/textures/transparent_texture.png");
+    transparentTexture.loadFromFile("textures/transparent_texture.png");
     sf::Texture heartTexture;
-    heartTexture.loadFromFile("/Users/cristinasavin/CLionProjects/stickman-combat/textures/heart_texture.png");
+    heartTexture.loadFromFile("textures/heart_texture.png");
     sf::Texture fightBannerTexture;
-    fightBannerTexture.loadFromFile("/Users/cristinasavin/CLionProjects/stickman-combat/textures/fight_banner_texture.png");
+    fightBannerTexture.loadFromFile("textures/fight_banner_texture.png");
     sf::Texture winnerBannerTexture;
-    winnerBannerTexture.loadFromFile("/Users/cristinasavin/CLionProjects/stickman-combat/textures/winner_texture.png");
+    winnerBannerTexture.loadFromFile("textures/winner_texture.png");
     sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("/Users/cristinasavin/CLionProjects/stickman-combat/textures/background.png");
+    backgroundTexture.loadFromFile("textures/background.png");
     sf::Sprite background(backgroundTexture);
 
     // Fit background correctly into window
