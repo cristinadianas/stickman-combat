@@ -60,6 +60,32 @@ add_executable(${MAIN_EXECUTABLE_NAME}
     main.cpp
     generated/src/Helper.cpp
     env_fixes.h
+        Animation.cpp
+        Animation.h
+        Collider.cpp
+        Collider.h
+        GameExceptions.h
+        Drawable.h
+        Drawable.cpp
+        Drawable.cpp
+        Drawable.h
+        Indicator.cpp
+        Indicator.h
+        AnimatedIndicator.cpp
+        AnimatedIndicator.h
+        Platform.cpp
+        Platform.h
+        HealthBar.cpp
+        HealthBar.h
+        Player.cpp
+        Player.h
+        Fight.cpp
+        Fight.h
+        MoveableIndicator.cpp
+        MoveableIndicator.h
+        Wind.cpp
+        Wind.h
+        Constants.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
@@ -76,7 +102,7 @@ target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE generated/incl
 # target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
 target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ${SFML_SOURCE_DIR}/include)
 target_link_directories(${MAIN_EXECUTABLE_NAME} PRIVATE ${SFML_BINARY_DIR}/lib)
-target_link_libraries(${MAIN_EXECUTABLE_NAME} PRIVATE sfml-graphics sfml-window sfml-system Threads::Threads)
+target_link_libraries(${MAIN_EXECUTABLE_NAME} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio Threads::Threads)
 
 if(APPLE)
 elseif(UNIX)
