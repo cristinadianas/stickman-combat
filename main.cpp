@@ -732,17 +732,17 @@ int main() {
 
     // Get all the textures
     sf::Texture playerTexture;
-    playerTexture.loadFromFile("textures/player_texture.png");
+    playerTexture.loadFromFile("../textures/player_texture.png");
     sf::Texture transparentTexture;
-    transparentTexture.loadFromFile("textures/transparent_texture.png");
+    transparentTexture.loadFromFile("../textures/transparent_texture.png");
     sf::Texture heartTexture;
-    heartTexture.loadFromFile("textures/heart_texture.png");
+    heartTexture.loadFromFile("../textures/heart_texture.png");
     sf::Texture fightBannerTexture;
-    fightBannerTexture.loadFromFile("textures/fight_banner_texture.png");
+    fightBannerTexture.loadFromFile("../textures/fight_banner_texture.png");
     sf::Texture winnerBannerTexture;
-    winnerBannerTexture.loadFromFile("textures/winner_texture.png");
+    winnerBannerTexture.loadFromFile("../textures/winner_texture.png");
     sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("textures/background.png");
+    backgroundTexture.loadFromFile("../textures/background.png");
     sf::Sprite background(backgroundTexture);
 
     // Fit background correctly into window
