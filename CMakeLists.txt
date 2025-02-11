@@ -57,35 +57,33 @@ endif()
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${MAIN_EXECUTABLE_NAME}
-    main.cpp
-    generated/src/Helper.cpp
-    env_fixes.h
-        Animation.cpp
-        Animation.h
-        Collider.cpp
-        Collider.h
-        GameExceptions.h
-        Drawable.h
-        Drawable.cpp
-        Drawable.cpp
-        Drawable.h
-        Indicator.cpp
-        Indicator.h
-        AnimatedIndicator.cpp
-        AnimatedIndicator.h
-        Platform.cpp
-        Platform.h
-        HealthBar.cpp
-        HealthBar.h
-        Player.cpp
-        Player.h
-        Fight.cpp
-        Fight.h
-        MoveableIndicator.cpp
-        MoveableIndicator.h
-        Wind.cpp
-        Wind.h
-        Constants.h
+        src/main.cpp
+        src/Animation.cpp
+        src/Animation.h
+        src/Collider.cpp
+        src/Collider.h
+        src/GameExceptions.h
+        src/Drawable.h
+        src/Drawable.cpp
+        src/Indicator.cpp
+        src/Indicator.h
+        src/AnimatedIndicator.cpp
+        src/AnimatedIndicator.h
+        src/Platform.cpp
+        src/Platform.h
+        src/HealthBar.cpp
+        src/HealthBar.h
+        src/Player.cpp
+        src/Player.h
+        src/Fight.cpp
+        src/Fight.h
+        src/MoveableIndicator.cpp
+        src/MoveableIndicator.h
+        src/Wind.cpp
+        src/Wind.h
+        src/Constants.h
+        generated/src/Helper.cpp
+        env_fixes.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
