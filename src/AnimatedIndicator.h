@@ -11,7 +11,7 @@ public:
     // Constructor and destructor
     AnimatedIndicator(sf::Texture* texture, sf::Vector2i imageCount, float switchTime,
                       sf::Vector2f size, sf::Vector2f position);
-    virtual ~AnimatedIndicator();
+    ~AnimatedIndicator() override;
 
     // Update the animation
     void Update(float deltaTime);

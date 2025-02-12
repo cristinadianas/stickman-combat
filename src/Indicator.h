@@ -1,15 +1,15 @@
 #ifndef OOP_INDICATOR_H
 #define OOP_INDICATOR_H
 
-#include "Drawable.h"
+#include "DrawableObject.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-class Indicator : public Drawable {
+class Indicator : public DrawableObject {
 public:
     Indicator(sf::Texture* texture, sf::Vector2f size, sf::Vector2f position);
 
-    virtual ~Indicator();
+    ~Indicator() override;
 
     // Overridde draw function
     void Draw(sf::RenderWindow &window) const override;

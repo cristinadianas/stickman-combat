@@ -10,7 +10,7 @@ class Platform : public Indicator {
 public:
     // Constructor and destructor
     Platform(sf::Texture* texture, sf::Vector2f size, sf::Vector2f position);
-    virtual ~Platform();
+    ~Platform() override;
 
     // Returns a Collider
     Collider GetCollider();

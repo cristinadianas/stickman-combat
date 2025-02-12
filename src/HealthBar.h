@@ -1,18 +1,18 @@
 #ifndef OOP_HEALTHBAR_H
 #define OOP_HEALTHBAR_H
 
-#include "Drawable.h"
+#include "DrawableObject.h"
 #include "AnimatedIndicator.h"
 #include "Constants.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
 
-class HealthBar : public Drawable {
+class HealthBar : public DrawableObject {
 public:
     // Constructor and destructor
     HealthBar(int nrHearts_, sf::Vector2f startPosition_, bool goRight_);
-    ~HealthBar() = default;
+    ~HealthBar() override = default;
 
     // Initializes the health bar with a given texture
     void Initialize(sf::Texture* texture);

@@ -8,16 +8,16 @@ Wind::Wind(sf::Texture* texture, sf::Vector2f size, float speed, float cooldown)
           isActive(false),
           direction(RIGHT)
 {
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));  // NOLINT
     Reset();
 }
 
 Wind::~Wind() = default;
 
 void Wind::Reset() {
-    int side = std::rand() % 2;
+    int side = std::rand() % 2;  // NOLINT
 
-    float positionY = static_cast<float>(std::rand() % static_cast<int>(WINDOW_HEIGHT));
+    auto positionY = static_cast<float>(std::rand() % static_cast<int>(WINDOW_HEIGHT));  // NOLINT
 
     if (side == START_LEFT) {
         // Start at the left side

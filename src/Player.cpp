@@ -42,7 +42,7 @@ Player::Player(const sf::String& name_, bool firstPlayer)
 
     row = IDLE;
     winner = false;
-    finished = false;
+    finishedWinningSound = false;
 
     body.setSize(sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT));
     body.setOrigin(body.getSize() / 2.0f);
@@ -203,7 +203,7 @@ bool Player::IsWinner() const {
 }
 
 bool Player::Isfinished() const {
-    return finished;
+    return finishedWinningSound;
 }
 
 void Player::Wins() {
@@ -213,16 +213,18 @@ void Player::Wins() {
 void Player::Dying(float deltaTime) {
     if (!dyingSoundPlayed)
     {
+        // Dying sound for this player
         audioResources.GetDyingSound().play();
         dyingSoundPlayed = true;
     }
     else if (audioResources.GetDyingSound().getStatus() == sf::SoundSource::Stopped && !winningSoundPlayed)
     {
+        // Winning sound for the other player
         audioResources.GetWinningSound().play();
         winningSoundPlayed = true;
     }
     else if (winningSoundPlayed && audioResources.GetWinningSound().getStatus() == sf::SoundSource::Stopped)
-        finished = true;
+        finishedWinningSound = true;
 
     velocity.x = 0.0f;
     velocity.y -= DYING_SPEED;
@@ -231,10 +233,6 @@ void Player::Dying(float deltaTime) {
 
 int Player::RemainingHearts() const {
     return healthBar.RemainingHearts();
-}
-
-bool Player::GameFinished() const {
-    return finished;
 }
 
 sf::Vector2f Player::GetPosition() const {

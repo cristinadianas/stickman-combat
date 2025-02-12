@@ -2,12 +2,13 @@
 #define OOP_GAMEEXCEPTIONS_H
 
 #include <exception>
+#include <utility>
 
 class GameException : public std::exception {
 public:
-    explicit GameException(const std::string& message_) : message(message_) {}
+    explicit GameException(std::string  message_) : message(std::move(message_)) {}
 
-    virtual const char* what() const noexcept override {
+    [[nodiscard]] const char* what() const noexcept override {
         return message.c_str();
     }
 

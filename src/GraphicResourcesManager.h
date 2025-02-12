@@ -21,8 +21,6 @@ public:
     // Returns a sprite for the background scaled to the given window size
     sf::Sprite GetScaledBackgroundSprite(const sf::Vector2u& windowSize) const;
 
-
-
 private:
     sf::Texture playerTexture;
     sf::Texture transparentTexture;

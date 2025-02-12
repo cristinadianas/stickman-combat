@@ -7,17 +7,17 @@
 
 class AudioResourcesManager {
 public:
+    // Constructor and destructor
     AudioResourcesManager();
     ~AudioResourcesManager();
 
+    // Plays the background music on a loop
     void PlayBackgroundMusic();
 
+    // Get sounds
     sf::Music& GetHitSound();
-
     sf::Music& GetJumpSound();
-
     sf::Music& GetWinningSound();
-
     sf::Music& GetDyingSound();
 
 private:

@@ -63,8 +63,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/Collider.cpp
         src/Collider.h
         src/GameExceptions.h
-        src/Drawable.h
-        src/Drawable.cpp
+        src/DrawableObject.h
+        src/DrawableObject.cpp
         src/Indicator.cpp
         src/Indicator.h
         src/AnimatedIndicator.cpp

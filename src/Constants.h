@@ -11,7 +11,6 @@ constexpr int JUMP = 2;
 constexpr int DUCK = 3;
 constexpr int EXECUTE_ATTACK = 4;
 constexpr int INITIALIZE_ATTACK = 5;
-constexpr int FULL_HEART = 0;
 constexpr int LAST_HEART = 1;
 
 
@@ -85,16 +84,10 @@ static const sf::Vector2f rightWallPosition(WINDOW_WIDTH, WINDOW_HEIGHT / 2.0f);
 
 // INDICATORS
 static const sf::Vector2f winnerBannerSize(225.0f, 225.0f);
-static const sf::Vector2f winnerBannerPosition(-200.0f, 500.0f);
 static const sf::Vector2f windSize(200.0f, 100.0f);
 static const sf::Vector2f fightBannerSize(200.0f, 200.0f);
 static const sf::Vector2f fightBannerPosition(WINDOW_WIDTH / 2.0f, 50.0f);
 
-
-// GAME
-constexpr int RUNNING = 0;
-constexpr int WON = 1;
-constexpr int FINISHED = 2;
 
 // FRAME REFRESH
 constexpr float MAX_SWITCH_TIME = 1.0f / 20.0f;

@@ -7,7 +7,7 @@ class MoveableIndicator : public Indicator {
 public:
     // Constructor and destructor
     MoveableIndicator(sf::Texture* texture, sf::Vector2f size, sf::Vector2f position);
-    virtual ~MoveableIndicator();
+    ~MoveableIndicator() override;
 
     // Moves the indicator by (dx, dy).
     void Move(float dx, float dy);

@@ -4,7 +4,6 @@
 #include "Constants.h"
 #include "GameExceptions.h"
 #include "Game.h"
-#include "env_fixes.h"
 
 
 int main() {

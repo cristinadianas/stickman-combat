@@ -1,7 +1,7 @@
 #ifndef OOP_PLAYER_H
 #define OOP_PLAYER_H
 
-#include "Drawable.h"
+#include "DrawableObject.h"
 #include "Animation.h"
 #include "HealthBar.h"
 #include "Collider.h"
@@ -14,12 +14,12 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <iostream>
 
-class Player : public Drawable {
+class Player : public DrawableObject {
 public:
     // Constructor and destructor
     Player(const sf::String& name_, bool firstPlayer);
 
-    ~Player();
+    ~Player() override;
 
     // Updates the player's state and animations
     void Update(float deltaTime);
@@ -60,9 +60,6 @@ public:
     // Returns the number of remaining hearts
     int RemainingHearts() const;
 
-    // Returns true if a player has won and all the sounds have finished playing
-    bool GameFinished() const;
-
     // Returns the player's current position
     sf::Vector2f GetPosition() const;
 
@@ -90,7 +87,7 @@ private:
 
     sf::String name;
     bool winner;
-    bool finished;
+    bool finishedWinningSound;
     sf::RectangleShape body;
     Animation animation;
     HealthBar healthBar;

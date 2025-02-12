@@ -11,7 +11,7 @@ class Wind : MoveableIndicator {
 public:
     // Constructor and destructor
     Wind(sf::Texture* texture, sf::Vector2f size, float speed, float cooldown);
-    virtual ~Wind();
+    ~Wind() override;
 
     // Update the wind state (move if active, otherwise wait until cooldown has passed)
     void Update(float deltaTime);

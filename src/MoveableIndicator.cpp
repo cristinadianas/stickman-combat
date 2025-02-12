@@ -3,7 +3,7 @@
 MoveableIndicator::MoveableIndicator(sf::Texture* texture, sf::Vector2f size,
                                      sf::Vector2f position)
         : Indicator(texture, size, position) {}
-MoveableIndicator::~MoveableIndicator() { }
+MoveableIndicator::~MoveableIndicator() = default;
 
 void MoveableIndicator::Move(float dx, float dy) {
     body.move(dx, dy);
