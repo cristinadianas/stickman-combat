@@ -30,7 +30,7 @@ private:
     void Update();
 
     // Checks collisions between all the entities
-    void CheckCollisions();
+    void SolveCollisions();
 
     // Checks for a winner and updates it
     void CheckWinner();

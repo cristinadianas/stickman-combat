@@ -19,9 +19,10 @@ public:
     // Returns the half of the size of the collider
     [[nodiscard]] sf::Vector2f GetHalfSize() const;
 
-    // Checks for collision with another collider.
-    // On collision, the direction vector is updated and the push factor is applied.
-    bool CheckCollision(Collider other, sf::Vector2f &direction, float push);
+    // Checks for collision with another collider
+    // On collision, if solve collision is true, the direction vector is updated
+    // and the push factor is applied. Otherwise, it just returns true.
+    bool CheckCollision(Collider other, sf::Vector2f &direction, bool solveCollision, float push);
 
     // Operator<<
     friend std::ostream& operator<<(std::ostream& os, const Collider& collider);

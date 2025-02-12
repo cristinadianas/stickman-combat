@@ -10,7 +10,6 @@ int main() {
     try {
         Game game(player1Name, player2Name);
         game.Run();
-        return 0;
     }
 
     catch (const GameException &e) {

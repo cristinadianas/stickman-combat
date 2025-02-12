@@ -27,7 +27,7 @@ void Game::Run() {
 
         CheckEvents();
         CheckWinner();
-        CheckCollisions();
+        SolveCollisions();
         Update();
         Draw();
         ExitWhenGameFinished();
@@ -44,32 +44,32 @@ void Game::Update() {
     ShowWinner();
 }
 
-void Game::CheckCollisions() {
+void Game::SolveCollisions() {
     // Reset the ground state for both players.
     player1.SetIsOnGround(false);
     player2.SetIsOnGround(false);
 
     sf::Vector2f direction;
 
-    if (ground.GetCollider().CheckCollision(player1.GetCollider(), direction, 1.0f))
+    if (ground.GetCollider().CheckCollision(player1.GetCollider(),direction, true, 1.0f))
         player1.OnCollision(direction);
 
-    if (ground.GetCollider().CheckCollision(player2.GetCollider(), direction, 1.0f))
+    if (ground.GetCollider().CheckCollision(player2.GetCollider(), direction, true,  1.0f))
         player2.OnCollision(direction);
 
-    if (leftWall.GetCollider().CheckCollision(player1.GetCollider(), direction, 1.0f))
+    if (leftWall.GetCollider().CheckCollision(player1.GetCollider(), direction, true, 1.0f))
         player1.OnCollision(direction);
 
-    if (leftWall.GetCollider().CheckCollision(player2.GetCollider(), direction, 1.0f))
+    if (leftWall.GetCollider().CheckCollision(player2.GetCollider(), direction, true, 1.0f))
         player2.OnCollision(direction);
 
-    if (rightWall.GetCollider().CheckCollision(player1.GetCollider(), direction, 1.0f))
+    if (rightWall.GetCollider().CheckCollision(player1.GetCollider(), direction, true, 1.0f))
         player1.OnCollision(direction);
 
-    if (rightWall.GetCollider().CheckCollision(player2.GetCollider(), direction, 1.0f))
+    if (rightWall.GetCollider().CheckCollision(player2.GetCollider(), direction, true, 1.0f))
         player2.OnCollision(direction);
 
-    if (player1.GetCollider().CheckCollision(player2.GetCollider(), direction, 0.5f)) {
+    if (player1.GetCollider().CheckCollision(player2.GetCollider(), direction, true, 0.5f)) {
         player1.OnCollision(-direction);
         player2.OnCollision(direction);
     }
