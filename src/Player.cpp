@@ -57,7 +57,7 @@ Player::Player(const sf::String& name_, bool firstPlayer_)
 
     row = IDLE;
     winner = false;
-    finishedWinningSound = false;
+    dyingSoundFinished = false;
     snowballHitCooldownRemaining = 0.0f;
 
     body.setSize(sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT));
@@ -201,6 +201,8 @@ void Player::ResetHealth() {
 }
 
 void Player::ResetPlayer() {
+    audioResources.GetWinningSound().stop();
+
     sf::Vector2f spawnPosition = firstPlayer ? firstSpawnPosition : secondSpawnPosition;
     body.setPosition(spawnPosition);
 
@@ -216,7 +218,7 @@ void Player::ResetPlayer() {
     snowballHitCooldownRemaining = 0.0f;
     dyingSoundPlayed = false;
     winningSoundPlayed = false;
-    finishedWinningSound = false;
+    dyingSoundFinished = false;
     row = IDLE;
     faceRight = firstPlayer;
 
@@ -269,7 +271,7 @@ bool Player::IsWinner() const {
 }
 
 bool Player::Isfinished() const {
-    return finishedWinningSound;
+    return dyingSoundFinished;
 }
 
 void Player::Wins() {
@@ -286,12 +288,12 @@ void Player::Dying(float deltaTime) {
     else if (audioResources.GetDyingSound().getStatus() == sf::SoundSource::Stopped && !winningSoundPlayed)
     {
         // Winning sound for the other player
-        audioResources.GetWinningSound().play();
         winningSoundPlayed = true;
+        dyingSoundFinished = true;
+        audioResources.GetWinningSound().play();
+        audioResources.GetWinningSound().setLoop(true);
     }
-    else if (winningSoundPlayed && audioResources.GetWinningSound().getStatus() == sf::SoundSource::Stopped) {
-        finishedWinningSound = true;
-    }
+
     velocity.x = 0.0f;
     velocity.y -= DYING_SPEED;
     body.move(velocity * deltaTime);

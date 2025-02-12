@@ -118,7 +118,7 @@ private:
     bool firstPlayer;
     sf::String name;
     bool winner;
-    bool finishedWinningSound;
+    bool dyingSoundFinished;
     sf::RectangleShape body;
     Animation animation;
     HealthBar<AnimatedIndicator> healthBar;

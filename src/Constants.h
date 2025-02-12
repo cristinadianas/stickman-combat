@@ -75,12 +75,16 @@ constexpr float GROUND_HEIGHT = 275.0f;
 constexpr float WINDOW_WIDTH = 1450.0f;
 constexpr float WINDOW_HEIGHT = 1024.0f;
 constexpr float OFFSET_BANNER = 0.65f * PLAYER_HEIGHT;
+constexpr float REPLAY_BUTTON_WIDTH = 400.0f;
+constexpr float REPLAY_BUTTON_HEIGHT = REPLAY_BUTTON_WIDTH;
 static const sf::Vector2f defaultPosition(-300.0f, -300.0f);
 static const sf::Vector2f groundSize(WINDOW_WIDTH, GROUND_HEIGHT);
 static const sf::Vector2f groundPosition(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT - (GROUND_HEIGHT / 2.0f));
 static const sf::Vector2f wallSize(0.1f, WINDOW_HEIGHT);
 static const sf::Vector2f leftWallPosition(0.0f, WINDOW_HEIGHT / 2.0f);
 static const sf::Vector2f rightWallPosition(WINDOW_WIDTH, WINDOW_HEIGHT / 2.0f);
+static const sf::Vector2f replayBannerSize(REPLAY_BUTTON_WIDTH, REPLAY_BUTTON_HEIGHT);
+static const sf::Vector2f replayBannerPosition(WINDOW_WIDTH / 2.0f, 100.0f);
 
 
 // SNOWBALL PARAMETERS

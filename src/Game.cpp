@@ -22,7 +22,9 @@ Game::Game(const sf::String& player1name_, const sf::String& player2name_)
           leftWall(GameObjectFactory::CreatePlatform(&graphicResources.GetTransparentTexture(),
                                                      wallSize, leftWallPosition)),
           rightWall(GameObjectFactory::CreatePlatform(&graphicResources.GetTransparentTexture(),
-                                                      wallSize, rightWallPosition))
+                                                      wallSize, rightWallPosition)),
+          replayBanner(GameObjectFactory::CreateIndicator(&graphicResources.GetReplayBannerTexture(),
+                                                          replayBannerSize, replayBannerPosition))
 {
     try {
         player1 = GameObjectFactory::CreatePlayer(player1name_, true);
@@ -49,10 +51,8 @@ void Game::Run() {
         if (deltaTime > MAX_SWITCH_TIME)
             deltaTime = MAX_SWITCH_TIME;
 
-        CheckEvents();
         CheckWinner();
-        ResetGame();
-
+        CheckEvents();
         SolveCollisions();
         Update();
         Draw();
@@ -121,18 +121,28 @@ void Game::CheckWinner() {
 }
 
 void Game::ResetGame() {
-    if (winner && loser->Isfinished()) {
-        winner = nullptr;
-        loser = nullptr;
-        player1->ResetPlayer();
-        player2->ResetPlayer();
-        snowballEnemy->setRespawn(true);
-    }
+    winner = nullptr;
+    loser = nullptr;
+    player1->ResetPlayer();
+    player2->ResetPlayer();
+    snowballEnemy->setRespawn(true);
 }
 
 void Game::ShowWinner() {
     sf::Vector2f winnerPosition = winner->GetPosition();
     winnerBanner->SetPosition(sf::Vector2f(winnerPosition.x, winnerPosition.y - OFFSET_BANNER));
+}
+
+bool Game::GameWon() const {
+    if(winner)
+        return true;
+    return false;
+}
+
+bool Game::GameFinished() const {
+    if(loser && loser->Isfinished())
+        return true;
+    return false;
 }
 
 void Game::Draw() {
@@ -144,16 +154,18 @@ void Game::Draw() {
     // Draw wind and banners
     wind->Draw(window);
     fightBanner->Draw(window);
-    if (winner)
-        winnerBanner->Draw(window);
+    if (GameFinished())
+        replayBanner->Draw(window);
 
     // Draw enemy snowballs
-    if(!winner)
+    if(!GameWon())
         snowballEnemy->Draw(window);
 
     // Draw players
     player1->Draw(window);
     player2->Draw(window);
+    if(GameFinished())
+        winnerBanner->Draw(window);
 
     window.display();
 }
@@ -172,6 +184,16 @@ void Game::CheckEvents() {
             case sf::Event::KeyPressed:
                 if(evnt.key.code == sf::Keyboard::Escape)
                     window.close();
+                if(evnt.key.code == sf::Keyboard::Space && GameFinished())
+                    ResetGame();
+            case sf::Event::MouseButtonPressed:
+                if(GameFinished()) {
+                    if (evnt.mouseButton.x <= replayBannerPosition.x + replayBannerSize.x / 2.0f &&
+                        evnt.mouseButton.x >= replayBannerPosition.x - replayBannerSize.x / 2.0f &&
+                        evnt.mouseButton.y <= replayBannerPosition.y + replayBannerSize.y / 2.0f &&
+                        evnt.mouseButton.y >= replayBannerPosition.y - replayBannerSize.y / 2.0f)
+                        ResetGame();
+                }
             default:
                 break;
         }

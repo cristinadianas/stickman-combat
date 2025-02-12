@@ -9,6 +9,8 @@ GraphicResourcesManager::GraphicResourcesManager() {
         throw TextureLoadException("../textures/heart_texture.png");
     if (!fightBannerTexture.loadFromFile("../textures/fight_banner_texture.png"))
         throw TextureLoadException("../textures/fight_banner_texture.png");
+    if(!replayBannerTexture.loadFromFile("../textures/replay_banner_texture.png"))
+        throw TextureLoadException("../textures/replay_banner_textures.png");
     if (!windTexture.loadFromFile("../textures/wind_texture.png"))
         throw TextureLoadException("../textures/wind_texture.png");
     if (!winnerBannerTexture.loadFromFile("../textures/winner_texture.png"))
@@ -35,6 +37,10 @@ sf::Texture& GraphicResourcesManager::GetHeartTexture() {
 
 sf::Texture& GraphicResourcesManager::GetFightBannerTexture() {
     return fightBannerTexture;
+}
+
+sf::Texture& GraphicResourcesManager::GetReplayBannerTexture() {
+    return replayBannerTexture;
 }
 
 sf::Texture& GraphicResourcesManager::GetWindTexture() {

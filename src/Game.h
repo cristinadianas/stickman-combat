@@ -49,6 +49,13 @@ private:
     // Draws a banner on top of the winner
     void ShowWinner();
 
+    // Returns true if the game has been won
+    bool GameWon() const;
+
+    // Returns true if the game has been won and
+    // the dying sound has finished playing
+    bool GameFinished() const;
+
     // Draws the screen
     void Draw();
 
@@ -77,6 +84,8 @@ private:
     std::unique_ptr<Platform> ground;
     std::unique_ptr<Platform> leftWall;
     std::unique_ptr<Platform> rightWall;
+
+    std::unique_ptr<Indicator> replayBanner;
 
     sf::Clock clock;
     float deltaTime;
