@@ -20,12 +20,12 @@ void Wind::Reset() {
     auto positionY = static_cast<float>(std::rand() % static_cast<int>(WINDOW_HEIGHT));  // NOLINT
 
     if (side == START_LEFT) {
-        // Start at the left side
+        // Start on left side
         SetPosition(sf::Vector2f(0.f, positionY));
         SetScale(sf::Vector2f(1.f, 1.f));
         direction = RIGHT;
     } else if (side == START_RIGHT){
-        // Start at the right side
+        // Start on the right side
         SetPosition(sf::Vector2f(WINDOW_WIDTH, positionY));
         // Flip the image so it faces left
         SetScale(sf::Vector2f(-1.f, 1.f));
@@ -37,7 +37,6 @@ void Wind::Reset() {
 
 void Wind::Update(float deltaTime) {
     if (isActive) {
-        // Move the wind horizontallY
         Move(windSpeed * deltaTime * (float) direction, 0.f);
 
         sf::Vector2f position = GetPosition();

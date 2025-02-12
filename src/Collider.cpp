@@ -21,7 +21,7 @@ sf::Vector2f Collider::GetHalfSize() const {
     return body.getSize() / 2.0f;
 }
 
-bool Collider::CheckCollision(Collider other, sf::Vector2f &direction, bool solveCollision, float push=0.0f) {
+bool Collider::CheckCollision(Collider other, sf::Vector2f &direction, bool solveCollision, float push) {
     sf::Vector2f otherPosition = other.GetPosition();
     sf::Vector2f otherHalfSize = other.GetHalfSize();
     sf::Vector2f thisPosition = GetPosition();

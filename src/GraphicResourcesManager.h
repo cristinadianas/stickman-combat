@@ -17,6 +17,7 @@ public:
     sf::Texture& GetFightBannerTexture();
     sf::Texture& GetWindTexture();
     sf::Texture& GetWinnerBannerTexture();
+    sf::Texture& GetSnowballTexture();
 
     // Returns a sprite for the background scaled to the given window size
     sf::Sprite GetScaledBackgroundSprite(const sf::Vector2u& windowSize) const;
@@ -28,6 +29,7 @@ private:
     sf::Texture fightBannerTexture;
     sf::Texture windTexture;
     sf::Texture winnerBannerTexture;
+    sf::Texture snowballTexture;
     sf::Texture backgroundTexture;
 };
 

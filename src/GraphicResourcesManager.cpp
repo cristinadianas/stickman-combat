@@ -13,6 +13,8 @@ GraphicResourcesManager::GraphicResourcesManager() {
         throw TextureLoadException("../textures/wind_texture.png");
     if (!winnerBannerTexture.loadFromFile("../textures/winner_texture.png"))
         throw TextureLoadException("../textures/winner_texture.png");
+    if(!snowballTexture.loadFromFile("../textures/snowball_texture.png"))
+        throw TextureLoadException("..textures/snowball_texture.png");
     if (!backgroundTexture.loadFromFile("../textures/background.png"))
         throw TextureLoadException("../textures/background.png");
 }
@@ -41,6 +43,10 @@ sf::Texture& GraphicResourcesManager::GetWindTexture() {
 
 sf::Texture& GraphicResourcesManager::GetWinnerBannerTexture() {
     return winnerBannerTexture;
+}
+
+sf::Texture& GraphicResourcesManager::GetSnowballTexture() {
+    return snowballTexture;
 }
 
 sf::Sprite GraphicResourcesManager::GetScaledBackgroundSprite(const sf::Vector2u& windowSize) const {

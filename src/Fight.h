@@ -4,8 +4,6 @@
 #include "Player.h"
 #include "GameExceptions.h"
 #include "Constants.h"
-#include "AudioResourcesManager.h"
-#include <SFML/Audio.hpp>
 #include <iostream>
 
 class Fight {
@@ -21,7 +19,6 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Fight& fight);
 
 private:
-    AudioResourcesManager audioResources;
     Player& player1;
     Player& player2;
 };

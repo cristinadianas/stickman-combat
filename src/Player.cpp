@@ -43,6 +43,7 @@ Player::Player(const sf::String& name_, bool firstPlayer)
     row = IDLE;
     winner = false;
     finishedWinningSound = false;
+    SnowballHitCooldownRemaining = 0.0f;
 
     body.setSize(sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT));
     body.setOrigin(body.getSize() / 2.0f);
@@ -62,9 +63,20 @@ Player::~Player() = default;
 
 void Player::Update(float deltaTime) {
 
-    if(IsDead())
+    if (IsDead())
         Dying(deltaTime);
+    else if (!SnowballHitCooldownPassed()) {
+        UpdateSnowballCounter(deltaTime);
+
+        row = SNOWBALL_COOLDOWN;
+
+        healthBar.Update(deltaTime);
+        animation.Update(row, deltaTime, faceRight);
+        body.setTextureRect(animation.GetUVRect());
+    }
     else {
+        UpdateSnowballCounter(deltaTime);
+
         // Handle attack & attack animation
 
         if (attackState == ATTACK_STATE_IDLE) {
@@ -191,7 +203,10 @@ void Player::ExecuteAttack() {
 }
 
 void Player::TakeHit() {
-    healthBar.DeleteHeart();
+    if (!IsWinner()) {
+        audioResources.GetHitSound().play();
+        healthBar.DeleteHeart();
+    }
 }
 
 bool Player::IsDead() const {
@@ -241,6 +256,19 @@ sf::Vector2f Player::GetPosition() const {
 
 void Player::SetIsOnGround(bool value) {
     isOnGround = value;
+}
+
+void Player::UpdateSnowballCounter(float deltaTime) {
+    if (SnowballHitCooldownRemaining > 0.0f)
+        SnowballHitCooldownRemaining -= deltaTime;
+}
+
+bool Player::SnowballHitCooldownPassed() const {
+    return (SnowballHitCooldownRemaining <= 0.0f);
+}
+
+void Player::SnowballHitCooldownReset() {
+    SnowballHitCooldownRemaining = SNOWBALL_HIT_COOLDOWN;
 }
 
 Collider Player::GetCollider() {

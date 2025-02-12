@@ -6,6 +6,7 @@ Game::Game(const sf::String& player1name, const sf::String& player2name)
           player2(player2name, false),
           winner(nullptr),
           fight(player1, player2),
+          snowballEnemy(&graphicResources.GetSnowballTexture(), imageCountSnowball, SWITCHTIME_SNOWBALL, snowballSize),
           fightBanner(&graphicResources.GetFightBannerTexture(), fightBannerSize, fightBannerPosition),
           winnerBanner(&graphicResources.GetWinnerBannerTexture(), winnerBannerSize, defaultPosition),
           wind(&graphicResources.GetWindTexture(), windSize, WIND_SPEED, WIND_COOLDOWN),
@@ -39,9 +40,14 @@ void Game::Update() {
     player1.Update(deltaTime);
     player2.Update(deltaTime);
     fight.Update();
+    snowballEnemy.Update(deltaTime);
+    snowballEnemy.CheckPlayerHit(player1);
+    snowballEnemy.CheckPlayerHit(player2);
 
-    // Show the winner banner only if the game has been won.
-    ShowWinner();
+    if(winner) {
+        ShowWinner();
+        snowballEnemy.setRespawn(false);
+    }
 }
 
 void Game::SolveCollisions() {
@@ -90,10 +96,8 @@ void Game::ExitWhenGameFinished() {
 }
 
 void Game::ShowWinner() {
-    if (winner) {
-        sf::Vector2f winnerPosition = winner->GetPosition();
-        winnerBanner.SetPosition(sf::Vector2f(winnerPosition.x, winnerPosition.y - OFFSET_BANNER));
-    }
+    sf::Vector2f winnerPosition = winner->GetPosition();
+    winnerBanner.SetPosition(sf::Vector2f(winnerPosition.x, winnerPosition.y - OFFSET_BANNER));
 }
 
 void Game::Draw() {
@@ -107,6 +111,10 @@ void Game::Draw() {
     fightBanner.Draw(window);
     if (winner)
         winnerBanner.Draw(window);
+
+    // Draw enemy snowballs
+    if(!winner)
+        snowballEnemy.Draw(window);
 
     // Draw players
     player1.Draw(window);

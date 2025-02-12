@@ -11,10 +11,11 @@ constexpr int JUMP = 2;
 constexpr int DUCK = 3;
 constexpr int EXECUTE_ATTACK = 4;
 constexpr int INITIALIZE_ATTACK = 5;
+constexpr int SNOWBALL_COOLDOWN = 6;
 constexpr int LAST_HEART = 1;
 
 
-// ATTACK PARAMETRES
+// ATTACK PARAMETERS
 constexpr float ATTACK_RANGE = 200.0f;
 constexpr int ATTACK_STATE_IDLE = 0;
 constexpr int ATTACK_PHASE_1 = 1;
@@ -33,12 +34,12 @@ constexpr float JUMP_SOUND_VOLUME = 100.0f;
 constexpr float BG_MUSIC_VOLUME = 100.0f;
 
 
-// PLAYER PARAMETRES
+// PLAYER PARAMETERS
 constexpr float PLAYER_WIDTH = 170.0f;
 constexpr float PLAYER_HEIGHT = 1.5f * PLAYER_WIDTH;
 constexpr float DYING_SPEED = 2.0f;
 constexpr int NR_FRAMES_PLAYER = 5;
-constexpr int NR_ANIMATIONS_PLAYER = 6;
+constexpr int NR_ANIMATIONS_PLAYER = 7;
 constexpr float SPEED = 250.0f;
 constexpr float JUMP_HEIGHT = 400.0f;
 constexpr float SWITCHTIME_PLAYER = 0.1f;
@@ -52,7 +53,7 @@ static const sf::String player1Name("Venom");
 static const sf::String player2Name("Shadow");
 
 
-// HEART PARAMETRES
+// HEART PARAMETERS
 constexpr float HEART_SIZE = 80.0f;
 constexpr int NR_FRAMES_HEART = 3;
 constexpr int NR_ANIMATIONS_HEART = 2;
@@ -60,7 +61,7 @@ constexpr float SWITCHTIME_HEART = 0.3f;
 static const sf::Vector2i imageCountHeart(NR_FRAMES_HEART, NR_ANIMATIONS_HEART);
 
 
-// WIND_PARAMETRES
+// WIND PARAMETERS
 constexpr int START_LEFT = 0;
 constexpr int START_RIGHT = 1;
 constexpr int RIGHT = 1;
@@ -80,6 +81,16 @@ static const sf::Vector2f groundPosition(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT - (G
 static const sf::Vector2f wallSize(0.1f, WINDOW_HEIGHT);
 static const sf::Vector2f leftWallPosition(0.0f, WINDOW_HEIGHT / 2.0f);
 static const sf::Vector2f rightWallPosition(WINDOW_WIDTH, WINDOW_HEIGHT / 2.0f);
+
+
+// SNOWBALL PARAMETERS
+static const sf::Vector2i imageCountSnowball(6, 1);
+constexpr float SWITCHTIME_SNOWBALL = 0.2f;
+static const sf::Vector2f snowballSize(PLAYER_HEIGHT * 0.6f, PLAYER_HEIGHT * 0.4f);
+constexpr float SNOWBALL_SPEED = 200.0f;
+constexpr float SNOWBALL_RESPAWN_TIME = 3.0f;
+constexpr float SNOWBALL_HIT_COOLDOWN = 2.0f;
+constexpr float SNOWBALL_HEIGHT_OFF_GROUND = PLAYER_HEIGHT * 0.25;
 
 
 // INDICATORS

@@ -8,14 +8,12 @@ void Fight::Update() {
     if (player1.IsInAttackingPhase2()) {
         if (player2.IsAttackable() && player2.IsInAttackRange(player1)) {
             player1.ExecuteAttack();
-            audioResources.GetHitSound().play();
             player2.TakeHit();
         }
     }
     if (player2.IsInAttackingPhase2()) {
         if (player1.IsAttackable() && player1.IsInAttackRange(player2)) {
             player2.ExecuteAttack();
-            audioResources.GetHitSound().play();
             player1.TakeHit();
         }
     }

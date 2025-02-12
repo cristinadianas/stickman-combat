@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "Fight.h"
 #include "Wind.h"
+#include "SnowballEnemy.h"
 #include "GraphicResourcesManager.h"
 #include "AudioResourcesManager.h"
 
@@ -56,6 +57,8 @@ private:
     Player player2;
     Player* winner;
     Fight fight;
+
+    SnowballEnemy snowballEnemy;
 
     Indicator fightBanner;
     MoveableIndicator winnerBanner;

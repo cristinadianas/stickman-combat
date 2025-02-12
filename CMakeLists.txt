@@ -92,6 +92,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/GraphicResourcesManager.h
         src/Game.cpp
         src/Game.h
+        src/SnowballEnemy.cpp
+        src/SnowballEnemy.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

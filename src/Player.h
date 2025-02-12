@@ -66,6 +66,15 @@ public:
     // Sets whether the player is on the ground
     void SetIsOnGround(bool value);
 
+    // Update snowball counter
+    void UpdateSnowballCounter(float deltaTime);
+
+    // Returns true if the player can be hit by snowball
+    bool SnowballHitCooldownPassed() const;
+
+    // Resets the timer for snowball hits
+    void SnowballHitCooldownReset();
+
     // Returns the player's collider
     Collider GetCollider();
 
@@ -95,6 +104,7 @@ private:
     int row;
     static float speed;
     static float jumpHeight;
+    float SnowballHitCooldownRemaining;
     bool faceRight;
 
     bool jumping;
