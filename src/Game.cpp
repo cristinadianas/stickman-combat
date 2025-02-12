@@ -186,6 +186,7 @@ void Game::CheckEvents() {
                     window.close();
                 if(evnt.key.code == sf::Keyboard::Space && GameFinished())
                     ResetGame();
+                break;
             case sf::Event::MouseButtonPressed:
                 if(GameFinished()) {
                     if (evnt.mouseButton.x <= replayBannerPosition.x + replayBannerSize.x / 2.0f &&
@@ -194,6 +195,7 @@ void Game::CheckEvents() {
                         evnt.mouseButton.y >= replayBannerPosition.y - replayBannerSize.y / 2.0f)
                         ResetGame();
                 }
+                break;
             default:
                 break;
         }
