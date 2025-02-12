@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "HealthBar.h"
 #include "Collider.h"
+#include "HealthBarUtils.h"
 #include "GameExceptions.h"
 #include "Constants.h"
 #include "AudioResourcesManager.h"
@@ -13,16 +14,25 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <iostream>
+#include <cmath>
 
 class Player : public DrawableObject {
 public:
-    // Constructor and destructor
-    Player(const sf::String& name_, bool firstPlayer);
+    // Factory method to get a Player instance
+    // Throws an exception if more than 2 players are requested
+    static std::shared_ptr<Player> CreatePlayer(const std::string& name, bool firstPlayer);
 
+    // Destructor
     ~Player() override;
 
     // Updates the player's state and animations
     void Update(float deltaTime);
+
+    // Resets the health of the player to the original parameter
+    void ResetHealth();
+
+    // Resets the player to the default parameters
+    void ResetPlayer();
 
     // Returns true if the player can start an attack
     bool CanAttack() const;
@@ -84,6 +94,9 @@ public:
     // Returns the player's name
     sf::String GetName() const;
 
+    // Deletes the players
+    static void ClearPlayers();
+
     // Draws the player on the screen
     void Draw(sf::RenderWindow& window) const override;
 
@@ -91,20 +104,26 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Player& player);
 
 private:
+    // Constructor
+    Player(const sf::String& name, bool firstPlayer);
+
+private:
+
     GraphicResourcesManager graphicResources;
     AudioResourcesManager audioResources;
 
+    bool firstPlayer;
     sf::String name;
     bool winner;
     bool finishedWinningSound;
     sf::RectangleShape body;
     Animation animation;
-    HealthBar healthBar;
+    HealthBar<AnimatedIndicator> healthBar;
     sf::Vector2f velocity;
     int row;
     static float speed;
     static float jumpHeight;
-    float SnowballHitCooldownRemaining;
+    float snowballHitCooldownRemaining;
     bool faceRight;
 
     bool jumping;
@@ -125,6 +144,9 @@ private:
 
     bool dyingSoundPlayed;
     bool winningSoundPlayed;
+
+    static constexpr int MAX_PLAYERS = 2;
+    static std::vector<std::shared_ptr<Player>> players;
 };
 
 #endif // OOP_PLAYER_H

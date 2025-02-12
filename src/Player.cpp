@@ -1,18 +1,31 @@
 #include "Player.h"
-#include <cmath>
+#include <iostream>
 
 float Player::speed = SPEED;
 float Player::jumpHeight = JUMP_HEIGHT;
 
-Player::Player(const sf::String& name_, bool firstPlayer)
-        : name(name_),
+std::vector<std::shared_ptr<Player>> Player::players;
+
+std::shared_ptr<Player> Player::CreatePlayer(const std::string& name, bool firstPlayer) {
+    if (players.size() >= MAX_PLAYERS)
+        throw std::runtime_error("Maximum number of players reached\n");
+
+    auto newPlayer = std::shared_ptr<Player>(new Player(name, firstPlayer));
+    players.push_back(newPlayer);
+    return newPlayer;
+}
+
+Player::Player(const sf::String& name_, bool firstPlayer_)
+        : firstPlayer(firstPlayer_),
+          name(name_),
           animation(&graphicResources.GetPlayerTexture(), imageCountPlayer, SWITCHTIME_PLAYER),
           healthBar(NR_HEARTS,
-                    ((firstPlayer)? firstHealthBarPosition : secondHealthBarPosition),
-                    firstPlayer)
+                    ((firstPlayer_)? firstHealthBarPosition : secondHealthBarPosition),
+                    firstPlayer_)
 
 {
     sf::Vector2f spawnPosition;
+    firstPlayer = firstPlayer_;
 
     if (firstPlayer)
     {
@@ -43,7 +56,7 @@ Player::Player(const sf::String& name_, bool firstPlayer)
     row = IDLE;
     winner = false;
     finishedWinningSound = false;
-    SnowballHitCooldownRemaining = 0.0f;
+    snowballHitCooldownRemaining = 0.0f;
 
     body.setSize(sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT));
     body.setOrigin(body.getSize() / 2.0f);
@@ -62,114 +75,150 @@ Player::Player(const sf::String& name_, bool firstPlayer)
 Player::~Player() = default;
 
 void Player::Update(float deltaTime) {
+    healthBar.Update(deltaTime);
+    UpdateSnowballCounter(deltaTime);
 
-    if (IsDead())
-        Dying(deltaTime);
-    else if (!SnowballHitCooldownPassed()) {
-        UpdateSnowballCounter(deltaTime);
-
-        row = SNOWBALL_COOLDOWN;
-
-        healthBar.Update(deltaTime);
-        animation.Update(row, deltaTime, faceRight);
-        body.setTextureRect(animation.GetUVRect());
+    if (healthBar.RemainingHearts() == 1) {
+        auto& indicator = healthBar.GetIndicator(0);
+        indicator.SetRow(LAST_HEART);
     }
-    else {
-        UpdateSnowballCounter(deltaTime);
 
-        // Handle attack & attack animation
+    if (IsDead()) {
+        Dying(deltaTime);
+        return;
+    }
 
-        if (attackState == ATTACK_STATE_IDLE) {
-            // If the attack key is pressed while in the idle state, start the attack sequence
-            if (sf::Keyboard::isKeyPressed(attack) && CanAttack()) {
-                attackState = ATTACK_PHASE_1;
-                attackTimer = 0.0f;
-                attackExecuted = false;
-                row = INITIALIZE_ATTACK;
-            }
-        } else if (attackState == ATTACK_PHASE_1) {
-            attackTimer += deltaTime;
-            // Disable movement while in attack phase 1 and attack phase 2
-            velocity.x = 0;
-            if (attackTimer >= ATTACK_PHASE_1_DURATION) {
-                attackState = ATTACK_PHASE_2;
-                attackTimer = 0.0f;
-                row = EXECUTE_ATTACK;
-            }
-        } else if (attackState == ATTACK_PHASE_2) {
-            attackTimer += deltaTime;
-            // Attack logic handled in Fight::Update
-            if (attackTimer >= ATTACK_PHASE_2_DURATION) {
-                attackState = ATTACK_COOLDOWN;
-                attackTimer = 0.0f;
-            }
-        } else if (attackState == ATTACK_COOLDOWN) {
-            attackTimer += deltaTime;
-            if (attackTimer >= ATTACK_COOLDOWN_DURATION) {
-                attackState = ATTACK_STATE_IDLE;
-                attackTimer = 0.0f;
-            }
-        }
-
-        velocity.x = 0.0f;
-
-        // Handle movement and animation
-
-        if (attackState == ATTACK_STATE_IDLE || attackState == ATTACK_COOLDOWN) {
-
-            // Handle movement
-
-            // Left
-            if (sf::Keyboard::isKeyPressed(left))
-                velocity.x -= speed;
-
-            // Right
-            if (sf::Keyboard::isKeyPressed(right))
-                velocity.x += speed;
-
-            // Jump
-            if (sf::Keyboard::isKeyPressed(up) && !jumping && !ducking) {
-                jumping = true;
-                isOnGround = false;
-                audioResources.GetJumpSound().stop();
-                audioResources.GetJumpSound().play();
-                velocity.y = -sqrtf(2.0f * 981.0f * jumpHeight);
-            }
-
-            // Duck
-            if (sf::Keyboard::isKeyPressed(down) && !jumping && !ducking)
-                ducking = true;
-
-            // Unduck
-            if (!sf::Keyboard::isKeyPressed(down))
-                ducking = false;
-
-            // Fall
-            if (!isOnGround) {
-                velocity.y += 981.0f * deltaTime;
-            }
-
-            // Set movement animation
-            if (ducking)
-                row = DUCK;
-            else if (velocity.x == 0.0f && velocity.y == 0.0f)
-                row = IDLE;
-            else if (velocity.x != 0.0f && velocity.y == 0.0f) {
-                row = WALK;
-                if (velocity.x > 0.0f) faceRight = true;
-                else faceRight = false;
-            } else if (velocity.y < 0.0f) {
-                row = JUMP;
-                if (velocity.x > 0.0f) faceRight = true;
-                else faceRight = false;
-            }
-        }
-
-        healthBar.Update(deltaTime);
+    if (!SnowballHitCooldownPassed()) {
+        row = SNOWBALL_COOLDOWN;
         animation.Update(row, deltaTime, faceRight);
         body.setTextureRect(animation.GetUVRect());
+        return;
+    }
+
+    if (attackState == ATTACK_STATE_IDLE) {
+        // If the attack key is pressed while in the idle state, start the attack sequence
+        if (sf::Keyboard::isKeyPressed(attack) && CanAttack()) {
+            attackState = ATTACK_PHASE_1;
+            attackTimer = 0.0f;
+            attackExecuted = false;
+            row = INITIALIZE_ATTACK;
+        }
+    } else if (attackState == ATTACK_PHASE_1) {
+        attackTimer += deltaTime;
+        // Disable movement while in attack phase 1 and attack phase 2
+        velocity.x = 0;
+        if (attackTimer >= ATTACK_PHASE_1_DURATION) {
+            attackState = ATTACK_PHASE_2;
+            attackTimer = 0.0f;
+            row = EXECUTE_ATTACK;
+        }
+    } else if (attackState == ATTACK_PHASE_2) {
+        attackTimer += deltaTime;
+        // Attack logic handled in Fight::Update
+        if (attackTimer >= ATTACK_PHASE_2_DURATION) {
+            attackState = ATTACK_COOLDOWN;
+            attackTimer = 0.0f;
+        }
+    } else if (attackState == ATTACK_COOLDOWN) {
+        attackTimer += deltaTime;
+        if (attackTimer >= ATTACK_COOLDOWN_DURATION) {
+            attackState = ATTACK_STATE_IDLE;
+            attackTimer = 0.0f;
+        }
+    }
+
+    // Handle movement and animation
+
+    velocity.x = 0.0f;
+
+    if (attackState == ATTACK_STATE_IDLE || attackState == ATTACK_COOLDOWN) {
+
+        // Handle movement
+
+        // Left
+        if (sf::Keyboard::isKeyPressed(left))
+            velocity.x -= speed;
+
+        // Right
+        if (sf::Keyboard::isKeyPressed(right))
+            velocity.x += speed;
+
+        // Jump
+        if (sf::Keyboard::isKeyPressed(up) && !jumping && !ducking) {
+            jumping = true;
+            isOnGround = false;
+            audioResources.GetJumpSound().stop();
+            audioResources.GetJumpSound().play();
+            velocity.y = -sqrtf(2.0f * 981.0f * jumpHeight);
+        }
+
+        // Duck
+        if (sf::Keyboard::isKeyPressed(down) && !jumping && !ducking)
+            ducking = true;
+
+        // Unduck
+        if (!sf::Keyboard::isKeyPressed(down))
+            ducking = false;
+
+        // Fall
+        if (!isOnGround) {
+            velocity.y += 981.0f * deltaTime;
+        }
+
+        // Set movement animation
+        if (ducking)
+            row = DUCK;
+        else if (velocity.x == 0.0f && velocity.y == 0.0f)
+            row = IDLE;
+        else if (velocity.x != 0.0f && velocity.y == 0.0f) {
+            row = WALK;
+            if (velocity.x > 0.0f) faceRight = true;
+            else faceRight = false;
+        } else if (velocity.y < 0.0f) {
+            row = JUMP;
+            if (velocity.x > 0.0f) faceRight = true;
+            else faceRight = false;
+        }
+
         body.move(velocity * deltaTime);
     }
+
+    animation.Update(row, deltaTime, faceRight);
+    body.setTextureRect(animation.GetUVRect());
+    return;
+}
+
+void Player::ResetHealth() {
+    ResetHealthBar(
+            healthBar,
+            &graphicResources.GetHeartTexture(),
+            NR_HEARTS,
+            (firstPlayer ? firstHealthBarPosition : secondHealthBarPosition),
+            firstPlayer
+    );
+}
+
+void Player::ResetPlayer() {
+    sf::Vector2f spawnPosition = firstPlayer ? firstSpawnPosition : secondSpawnPosition;
+    body.setPosition(spawnPosition);
+
+    velocity = sf::Vector2f(0.f, 0.f);
+
+    winner = false;
+    jumping = false;
+    ducking = false;
+    isOnGround = false;
+    attackState = ATTACK_STATE_IDLE;
+    attackTimer = 0.0f;
+    attackExecuted = false;
+    snowballHitCooldownRemaining = 0.0f;
+    dyingSoundPlayed = false;
+    winningSoundPlayed = false;
+    finishedWinningSound = false;
+    row = IDLE;
+    faceRight = firstPlayer;
+
+    ResetHealth();
 }
 
 bool Player::CanAttack() const {
@@ -238,9 +287,9 @@ void Player::Dying(float deltaTime) {
         audioResources.GetWinningSound().play();
         winningSoundPlayed = true;
     }
-    else if (winningSoundPlayed && audioResources.GetWinningSound().getStatus() == sf::SoundSource::Stopped)
+    else if (winningSoundPlayed && audioResources.GetWinningSound().getStatus() == sf::SoundSource::Stopped) {
         finishedWinningSound = true;
-
+    }
     velocity.x = 0.0f;
     velocity.y -= DYING_SPEED;
     body.move(velocity * deltaTime);
@@ -259,16 +308,16 @@ void Player::SetIsOnGround(bool value) {
 }
 
 void Player::UpdateSnowballCounter(float deltaTime) {
-    if (SnowballHitCooldownRemaining > 0.0f)
-        SnowballHitCooldownRemaining -= deltaTime;
+    if (snowballHitCooldownRemaining > 0.0f)
+        snowballHitCooldownRemaining -= deltaTime;
 }
 
 bool Player::SnowballHitCooldownPassed() const {
-    return (SnowballHitCooldownRemaining <= 0.0f);
+    return (snowballHitCooldownRemaining <= 0.0f);
 }
 
 void Player::SnowballHitCooldownReset() {
-    SnowballHitCooldownRemaining = SNOWBALL_HIT_COOLDOWN;
+    snowballHitCooldownRemaining = SNOWBALL_HIT_COOLDOWN;
 }
 
 Collider Player::GetCollider() {
@@ -299,6 +348,10 @@ void Player::OnCollision(sf::Vector2f direction) {
 
 sf::String Player::GetName() const {
     return name;
+}
+
+void Player::ClearPlayers() {
+    players.clear();
 }
 
 void Player::Draw(sf::RenderWindow& window) const {

@@ -15,17 +15,24 @@
 #include "SnowballEnemy.h"
 #include "GraphicResourcesManager.h"
 #include "AudioResourcesManager.h"
+#include "GameObjectFactory.h"
 
 class Game {
 public:
-    // Constructor and destructor
-    Game(const sf::String& player1name, const sf::String& player2name);
-    ~Game();
+    // Singleton: Returns a reference to the single Game instance
+    static Game& getInstance(const sf::String& player1name_, const sf::String& player2name_);
 
     // Main game loop
     void Run();
 
+    // Delete copy constructor and copy assignment operator.
+    Game(const Game&) = delete;
+    Game& operator=(const Game&) = delete;
+
 private:
+    // Constructor and destructor
+    Game(const sf::String& player1name, const sf::String& player2name);
+    ~Game();
 
     // Updates all the entities
     void Update();
@@ -37,7 +44,7 @@ private:
     void CheckWinner();
 
     // When the winning player finished its sounds, closes the window
-    void ExitWhenGameFinished();
+    void ResetGame();
 
     // Draws a banner on top of the winner
     void ShowWinner();
@@ -53,21 +60,23 @@ private:
     GraphicResourcesManager graphicResources;
     AudioResourcesManager audioResources;
 
-    Player player1;
-    Player player2;
-    Player* winner;
-    Fight fight;
+    std::shared_ptr<Player> player1;
+    std::shared_ptr<Player> player2;
+    Player *winner;
+    Player *loser;
 
-    SnowballEnemy snowballEnemy;
+    std::unique_ptr<Fight> fight;
 
-    Indicator fightBanner;
-    MoveableIndicator winnerBanner;
+    std::unique_ptr<SnowballEnemy> snowballEnemy;
 
-    Wind wind;
+    std::unique_ptr<Indicator> fightBanner;
+    std::unique_ptr<MoveableIndicator> winnerBanner;
 
-    Platform ground;
-    Platform leftWall;
-    Platform rightWall;
+    std::unique_ptr<Wind> wind;
+
+    std::unique_ptr<Platform> ground;
+    std::unique_ptr<Platform> leftWall;
+    std::unique_ptr<Platform> rightWall;
 
     sf::Clock clock;
     float deltaTime;

@@ -71,7 +71,6 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/AnimatedIndicator.h
         src/Platform.cpp
         src/Platform.h
-        src/HealthBar.cpp
         src/HealthBar.h
         src/Player.cpp
         src/Player.h
@@ -94,6 +93,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/Game.h
         src/SnowballEnemy.cpp
         src/SnowballEnemy.h
+        src/HealthBarUtils.h
+        src/GameObjectFactory.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

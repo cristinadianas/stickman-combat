@@ -1,15 +1,13 @@
 #include <iostream>
 #include <array>
 #include <thread>
-#include "Constants.h"
 #include "GameExceptions.h"
 #include "Game.h"
 
 
 int main() {
     try {
-        Game game(player1Name, player2Name);
-        game.Run();
+        Game::getInstance(player1Name, player2Name).Run();
     }
 
     catch (const GameException &e) {
