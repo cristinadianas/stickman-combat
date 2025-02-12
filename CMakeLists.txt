@@ -83,7 +83,15 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/Wind.h
         src/Constants.h
         generated/src/Helper.cpp
-        env_fixes.h
+        src/env_fixes.h
+        src/AudioResourcesManager.cpp
+        src/AudioResourcesManager.h
+        src/AudioResourcesManager.cpp
+        src/AudioResourcesManager.h
+        src/GraphicResourcesManager.cpp
+        src/GraphicResourcesManager.h
+        src/Game.cpp
+        src/Game.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

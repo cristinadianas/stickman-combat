@@ -7,6 +7,8 @@
 #include "Collider.h"
 #include "GameExceptions.h"
 #include "Constants.h"
+#include "AudioResourcesManager.h"
+#include "GraphicResourcesManager.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -14,13 +16,8 @@
 
 class Player : public Drawable {
 public:
-    // Constructor declaration
-    Player(const sf::String& name_, sf::Texture* texture, sf::Vector2i imageCount, float switchTime,
-           float speed_, float jumpHeight_, sf::Vector2f spawnPosition,
-           int nrHearts, sf::Vector2f healthBarPosition, bool goRight = true, bool faceRight_ = true,
-           sf::Keyboard::Key up_ = sf::Keyboard::W, sf::Keyboard::Key down_ = sf::Keyboard::S,
-           sf::Keyboard::Key left_ = sf::Keyboard::A, sf::Keyboard::Key right_ = sf::Keyboard::D,
-           sf::Keyboard::Key attack_ = sf::Keyboard::E);
+    // Constructor and destructor
+    Player(const sf::String& name_, bool firstPlayer);
 
     ~Player();
 
@@ -51,6 +48,9 @@ public:
     // Returns true if the player is the winner
     bool IsWinner() const;
 
+    // Returns true if the winning player sounds finished playing
+    bool Isfinished() const;
+
     // Makes the player the winner
     void Wins();
 
@@ -60,12 +60,7 @@ public:
     // Returns the number of remaining hearts
     int RemainingHearts() const;
 
-    // Initializes the player's health bar with a given texture
-    void InitializeHealthBar(sf::Texture* texture);
-
-    // Draws the player's health bar
-    void DrawHealthBar(sf::RenderWindow& window) const override;
-
+    // Returns true if a player has won and all the sounds have finished playing
     bool GameFinished() const;
 
     // Returns the player's current position
@@ -90,6 +85,9 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Player& player);
 
 private:
+    GraphicResourcesManager graphicResources;
+    AudioResourcesManager audioResources;
+
     sf::String name;
     bool winner;
     bool finished;
@@ -98,8 +96,8 @@ private:
     HealthBar healthBar;
     sf::Vector2f velocity;
     int row;
-    float speed;
-    float jumpHeight;
+    static float speed;
+    static float jumpHeight;
     bool faceRight;
 
     bool jumping;
@@ -120,9 +118,6 @@ private:
 
     bool dyingSoundPlayed;
     bool winningSoundPlayed;
-    sf::Music jumpSound;
-    sf::Music dyingSound;
-    sf::Music winningSound;
 };
 
 #endif // OOP_PLAYER_H

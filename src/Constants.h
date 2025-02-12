@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
+
 // ANIMATION ROWS
 constexpr int IDLE = 0;
 constexpr int WALK = 1;
@@ -25,13 +26,18 @@ constexpr float ATTACK_PHASE_2_DURATION = 0.25f;
 constexpr float ATTACK_COOLDOWN_DURATION = 0.5f;
 
 
+// AUDIO
+constexpr float WIN_SOUND_VOLUME = 80.0f;
+constexpr float DIE_SOUND_VOLUME = 50.0f;
+constexpr float HIT_SOUND_VOLUME = 22.0f;
+constexpr float JUMP_SOUND_VOLUME = 100.0f;
+constexpr float BG_MUSIC_VOLUME = 100.0f;
+
+
 // PLAYER PARAMETRES
 constexpr float PLAYER_WIDTH = 170.0f;
 constexpr float PLAYER_HEIGHT = 1.5f * PLAYER_WIDTH;
 constexpr float DYING_SPEED = 2.0f;
-constexpr float HIT_SOUND_VOLUME = 22.0f;
-constexpr float DIE_SOUND_VOLUME = 50.0f;
-constexpr float WIN_SOUND_VOLUME = 80.0f;
 constexpr int NR_FRAMES_PLAYER = 5;
 constexpr int NR_ANIMATIONS_PLAYER = 6;
 constexpr float SPEED = 250.0f;
@@ -39,10 +45,10 @@ constexpr float JUMP_HEIGHT = 400.0f;
 constexpr float SWITCHTIME_PLAYER = 0.1f;
 constexpr int NR_HEARTS = 5;
 static const sf::Vector2i imageCountPlayer(NR_FRAMES_PLAYER, NR_ANIMATIONS_PLAYER);
-static const sf:: Vector2f player1SpawnPosition(300.0f, 300.0f);
-static const sf:: Vector2f player2SpawnPosition(1100.0f, 300.0f);
-static const sf::Vector2f healthBar1Position(60.0f, 60.0f);
-static const sf::Vector2f healthBar2Position(1380.0f, 60.0f);
+static const sf:: Vector2f firstSpawnPosition(300.0f, 300.0f);
+static const sf:: Vector2f secondSpawnPosition(1100.0f, 300.0f);
+static const sf::Vector2f firstHealthBarPosition(60.0f, 60.0f);
+static const sf::Vector2f secondHealthBarPosition(1380.0f, 60.0f);
 static const sf::String player1Name("Venom");
 static const sf::String player2Name("Shadow");
 
@@ -63,12 +69,19 @@ constexpr int LEFT = -1;
 constexpr float WIND_SPEED = 300.0f;
 constexpr float WIND_COOLDOWN = 5.0f;
 
+
 // SIZES
 constexpr float GROUND_HEIGHT = 275.0f;
 constexpr float WINDOW_WIDTH = 1450.0f;
 constexpr float WINDOW_HEIGHT = 1024.0f;
 constexpr float OFFSET_BANNER = 0.65f * PLAYER_HEIGHT;
 static const sf::Vector2f defaultPosition(-300.0f, -300.0f);
+static const sf::Vector2f groundSize(WINDOW_WIDTH, GROUND_HEIGHT);
+static const sf::Vector2f groundPosition(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT - (GROUND_HEIGHT / 2.0f));
+static const sf::Vector2f wallSize(0.1f, WINDOW_HEIGHT);
+static const sf::Vector2f leftWallPosition(0.0f, WINDOW_HEIGHT / 2.0f);
+static const sf::Vector2f rightWallPosition(WINDOW_WIDTH, WINDOW_HEIGHT / 2.0f);
+
 
 // INDICATORS
 static const sf::Vector2f winnerBannerSize(225.0f, 225.0f);
@@ -76,6 +89,12 @@ static const sf::Vector2f winnerBannerPosition(-200.0f, 500.0f);
 static const sf::Vector2f windSize(200.0f, 100.0f);
 static const sf::Vector2f fightBannerSize(200.0f, 200.0f);
 static const sf::Vector2f fightBannerPosition(WINDOW_WIDTH / 2.0f, 50.0f);
+
+
+// GAME
+constexpr int RUNNING = 0;
+constexpr int WON = 1;
+constexpr int FINISHED = 2;
 
 // FRAME REFRESH
 constexpr float MAX_SWITCH_TIME = 1.0f / 20.0f;

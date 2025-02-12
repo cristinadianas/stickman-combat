@@ -1,30 +1,44 @@
 #include "Player.h"
 #include <cmath>
 
+float Player::speed = SPEED;
+float Player::jumpHeight = JUMP_HEIGHT;
 
-Player::Player(const sf::String& name_, sf::Texture* texture, sf::Vector2i imageCount, float switchTime,
-               float speed_, float jumpHeight_, sf::Vector2f spawnPosition,
-               int nrHearts, sf::Vector2f healthBarPosition, bool goRight, bool faceRight_,
-               sf::Keyboard::Key up_, sf::Keyboard::Key down_, sf::Keyboard::Key left_,
-               sf::Keyboard::Key right_, sf::Keyboard::Key attack_)
+Player::Player(const sf::String& name_, bool firstPlayer)
         : name(name_),
-          animation(texture, imageCount, switchTime),
-          healthBar(nrHearts, healthBarPosition, goRight),
-          speed(speed_), jumpHeight(jumpHeight_), faceRight(faceRight_),
-          up(up_), down(down_), left(left_), right(right_), attack(attack_)
+          animation(&graphicResources.GetPlayerTexture(), imageCountPlayer, SWITCHTIME_PLAYER),
+          healthBar(NR_HEARTS,
+                    ((firstPlayer)? firstHealthBarPosition : secondHealthBarPosition),
+                    firstPlayer)
+
 {
+    sf::Vector2f spawnPosition;
+
+    if (firstPlayer)
+    {
+        spawnPosition = firstSpawnPosition;
+        faceRight = true;
+        up = sf::Keyboard::W;
+        down = sf::Keyboard::S;
+        left = sf::Keyboard::A;
+        right = sf::Keyboard::D;
+        attack = sf::Keyboard::LShift;
+    }
+    else
+    {
+        spawnPosition = secondSpawnPosition;
+        faceRight = false;
+        up = sf::Keyboard::O;
+        down = sf::Keyboard::L;
+        left = sf::Keyboard::K;
+        right = sf::Keyboard::Semicolon;
+        attack = sf::Keyboard::RShift;
+    }
+
+    healthBar.Initialize(&graphicResources.GetHeartTexture());
+
     dyingSoundPlayed = false;
     winningSoundPlayed = false;
-
-    if (!jumpSound.openFromFile("../sounds/jump.wav"))
-        throw SoundException("../sounds/jump.wav");
-    if (!dyingSound.openFromFile("../sounds/dying.wav"))
-        throw SoundException("../sounds/dying.wav");
-    if (!winningSound.openFromFile("../sounds/win.wav"))
-        throw SoundException("../sounds/win.wav");
-
-    dyingSound.setVolume(DIE_SOUND_VOLUME);
-    winningSound.setVolume(WIN_SOUND_VOLUME);
 
     row = IDLE;
     winner = false;
@@ -33,7 +47,7 @@ Player::Player(const sf::String& name_, sf::Texture* texture, sf::Vector2i image
     body.setSize(sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT));
     body.setOrigin(body.getSize() / 2.0f);
     body.setPosition(spawnPosition.x, spawnPosition.y);
-    body.setTexture(texture);
+    body.setTexture(&graphicResources.GetPlayerTexture());
 
     jumping = false;
     ducking = false;
@@ -105,8 +119,8 @@ void Player::Update(float deltaTime) {
             if (sf::Keyboard::isKeyPressed(up) && !jumping && !ducking) {
                 jumping = true;
                 isOnGround = false;
-                jumpSound.stop();
-                jumpSound.play();
+                audioResources.GetJumpSound().stop();
+                audioResources.GetJumpSound().play();
                 velocity.y = -sqrtf(2.0f * 981.0f * jumpHeight);
             }
 
@@ -188,6 +202,10 @@ bool Player::IsWinner() const {
     return winner;
 }
 
+bool Player::Isfinished() const {
+    return finished;
+}
+
 void Player::Wins() {
     winner = true;
 }
@@ -195,15 +213,15 @@ void Player::Wins() {
 void Player::Dying(float deltaTime) {
     if (!dyingSoundPlayed)
     {
-        dyingSound.play();
+        audioResources.GetDyingSound().play();
         dyingSoundPlayed = true;
     }
-    else if (dyingSound.getStatus() == sf::SoundSource::Stopped && !winningSoundPlayed)
+    else if (audioResources.GetDyingSound().getStatus() == sf::SoundSource::Stopped && !winningSoundPlayed)
     {
-        winningSound.play();
+        audioResources.GetWinningSound().play();
         winningSoundPlayed = true;
     }
-    else if (winningSoundPlayed && winningSound.getStatus() == sf::SoundSource::Stopped)
+    else if (winningSoundPlayed && audioResources.GetWinningSound().getStatus() == sf::SoundSource::Stopped)
         finished = true;
 
     velocity.x = 0.0f;
@@ -213,15 +231,6 @@ void Player::Dying(float deltaTime) {
 
 int Player::RemainingHearts() const {
     return healthBar.RemainingHearts();
-}
-
-void Player::InitializeHealthBar(sf::Texture* texture) {
-    healthBar.Initialize(texture);
-}
-
-void Player::DrawHealthBar(sf::RenderWindow& window) const {
-    if (!IsDead())
-        healthBar.Draw(window);
 }
 
 bool Player::GameFinished() const {
@@ -268,6 +277,7 @@ sf::String Player::GetName() const {
 
 void Player::Draw(sf::RenderWindow& window) const {
     window.draw(body);
+    healthBar.Draw(window);
 }
 
 std::ostream& operator<<(std::ostream& os, const Player& player) {

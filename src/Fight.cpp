@@ -2,24 +2,20 @@
 
 Fight::Fight(Player& player1, Player& player2)
         : player1(player1), player2(player2) {
-
-    if(!hitSound.openFromFile("../sounds/fist_hit.wav"))
-        throw SoundException("../sounds/fist_hit.wav");
-    hitSound.setVolume(HIT_SOUND_VOLUME);
 }
 
 void Fight::Update() {
     if (player1.IsInAttackingPhase2()) {
         if (player2.IsAttackable() && player2.IsInAttackRange(player1)) {
             player1.ExecuteAttack();
-            hitSound.play();
+            audioResources.GetHitSound().play();
             player2.TakeHit();
         }
     }
     if (player2.IsInAttackingPhase2()) {
         if (player1.IsAttackable() && player1.IsInAttackRange(player2)) {
             player2.ExecuteAttack();
-            hitSound.play();
+            audioResources.GetHitSound().play();
             player1.TakeHit();
         }
     }
