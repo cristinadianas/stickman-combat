@@ -15,6 +15,9 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <iostream>
 #include <cmath>
+#include <memory>
+#include <vector>
+#include <string>
 
 class Player : public DrawableObject {
 public:
