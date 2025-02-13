@@ -7,7 +7,7 @@ Acest proiect reprezintă un joc de tip fighting game 2D scris în C++ și bazat
 
 
 ### Game Flow
-Sunt generate arena (backgroundul, pereții, pământul etc.) și cei doi jucători. Cei doi jucători au un număr limitat de vieți. Un jucător pierde o viață atunci când este atacat cu succes de celălalt jucător sau atunci când este lovit de un bulgăre de zăpadă. După ce unul dintre jucători și-a pierdut toate viețile acesta va fi considerat pierzător, iar oponentul lui va fi considerat câștigător. Ulterior sfârșitului unei runde, există opțiunea de a alege a juca din nou. 
+Sunt generate arena (backgroundul, pereții, pământul, datele despre jucători (numărul de vieți rămase), vântul etc.) și cei doi jucători. Cei doi jucători au un număr limitat de vieți. Un jucător pierde o viață atunci când este atacat cu succes de celălalt jucător sau atunci când este lovit de un bulgăre de zăpadă. După ce unul dintre jucători și-a pierdut toate viețile acesta va fi considerat pierzător, iar oponentul lui va fi considerat câștigător. Ulterior sfârșitului unei runde, există opțiunea de a alege a juca din nou. 
 
 
 ### Acțiuni posibile ale unui jucător
@@ -45,6 +45,7 @@ Sunt generate arena (backgroundul, pereții, pământul etc.) și cei doi jucăt
 ### Interacțiunea dintre jucători și mediu
 * Detectarea coliziunii dintre jucători și arena: jucătorii se mișcă pe pământ și jucătorii nu se pot duce off screen datorită pereților. Atât pământul, cât și pereții sunt transparenți din motive estetice (avem deja imagine de background).
 * Inamici: Bulgări de zăpadă. Un bulgăre de zăpadă care traversează secțiunea inferioară a ecranului de la stânga la dreapta sau de la dreapta la stânga (determinat în mod aleatoriu) apare pe ecran o dată la un interval fix de timp. La detectarea coliziunii cu un jucător, acel jucător va pierde o viață. Coliziunea nu va fi rezolvată (adică bulgărele de zăpadă și jucătorul se pot suprapune). În plus, jucătorul lovit nu se va putea mișca și va fi vulnerabil pentru o perioadă de timp. Jucătorii trebuie să sară peste acești inamici.
+* Vântul este inofensiv. Scopul lui este pur și simplu de a crește puțin dificultatea jocului prin adăugarea unei distracții de la pericolele reale.
 
 
 ### Next Steps: To Do
@@ -185,3 +186,5 @@ Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
 - [SFML](https://github.com/SFML/SFML/tree/2.6.1) (Zlib)
   - [OpenAL](https://openal-soft.org/) (LGPL): din cauza licenței, trebuie distribuită ca shared library
 - https://www.youtube.com/watch?v=axIgxBQVBg0&list=PL21OsoBLPpMOO6zyVlxZ4S4hwkY_SLRW9 (SFML 2.4 For Beginners)
+- Imaginile folosite au fost generate folosind ChatGPT, cu următoarele excepții: animația pentru stickman (player_texture.png) a fost creată în Pivot Animator 5, animația pentru bulgării de zăpadă (snowball_texture.png) a fost preluata de aici: https://www.gamedeveloperstudio.com/graphics/viewgraphic.php?page-name=Animated-snowball-game-projectile&item=1k5h5u4t2r9g0o8q6a, iar animația pentru vânt (wind_texture.png) a fost preluat de aici: https://loading.io/icon/to8zzb.
+- Fișierele audio au fost preluate de aici: https://pixabay.com/sound-effects/
