@@ -1,4 +1,60 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# Stickman Combat
+
+
+## Descriere
+
+Acest proiect reprezintă un joc de tip fighting game 2D scris în C++ și bazat pe principiile programării orientate pe obiecte. Jocul este de sumă zero (un jucător câștigă, celălalt pierde) conceput pentru doi jucători care se joacă de pe o aceeași tastatura. Cei doi jucători sunt 2 stickmen. :) Referitor la interfața grafică și audio, jocul este animat și conține feedback sonor pe baza bibliotecii SFML. Include caracteristicile de baza ale unui fighting game 2D, și anume implementează mișcările jucătorilor, interacțiunile dintre jucători și interacțiunile dintre jucători și mediu. 
+
+
+### Game Flow
+Sunt generate arena (backgroundul, pereții, pământul etc.) și cei doi jucători. Cei doi jucători au un număr limitat de vieți. Un jucător pierde o viață atunci când este atacat cu succes de celălalt jucător sau atunci când este lovit de un bulgăre de zăpadă. După ce unul dintre jucători și-a pierdut toate viețile acesta va fi considerat pierzător, iar oponentul lui va fi considerat câștigător. Ulterior sfârșitului unei runde, există opțiunea de a alege a juca din nou. 
+
+
+### Acțiuni posibile ale unui jucător
+* Mișcare stânga-dreapta
+* Săritură
+* Atac
+* Se poate feri
+
+#### Keybinds:
+* v0.1 
+  * Jucătorul 1 (jucătorul din stânga): stânga = A, dreapta = D, sus (sari) = W, jos (ferește-te) = S, atacă = E
+  * Jucătorul 2 (jucătorul din dreapta): stânga = H, dreapta = K, sus (sari) = U, jos (ferește-te) = J, atacă = I
+  * Ieși din joc = Escape (sau se poate închide fereastra)
+  * Joacă din nou (valabil la sfârșitul unui joc) = Space (sau se poate apăsa butonul de pe ecran marcat "Replay")
+
+* v0.2.1 , v0.2.2, v0.3, v0.4.1
+  * Jucătorul 1 (jucătorul din stânga): stânga = A, dreapta = D, sus (sari) = W, jos (ferește-te) = S, atacă = LShift
+  * Jucătorul 2 (jucătorul din dreapta): stânga = K, dreapta = Semicolon (;), sus (sari) = O, jos (ferește-te) = K, atacă = RShift
+ 
+* în plus, pentru v0.4.1
+  * Ieși din joc = Escape (sau se poate închide fereastra)
+  * Joacă din nou (valabil la sfârșitul unui joc) = Space (sau se poate apăsa butonul de pe ecran marcat "Replay")
+
+
+### Interacțiunea dintre jucători
+* Detectarea coliziunii: Jucătorii nu se pot suprapune, se împing unul pe celălalt
+* Atac, în urma căruia se vor întâmpla următoarele:
+   * Faza 0: Nu atacă. Este liber să se miște.
+   * Faza 1: Atacul este inițializat. Jucătorul rămâne blocat în poziția în care a inițializat atacul. În această perioadă, celălalt jucătoare se poate feri de atac.
+   * Faza 2: Atacul este executat. Jucătorul rămâne în continuare blocat în poziția în care a inițializat atacul. Acum se verifică dacă celălalt jucător va fi lovit (dacă este în range-ul atacului și nu se ferește).
+   * Faza 3: Cooldown. Acum jucătorul este din nou liber să se miște, însă nu și să atace.
+* Se poate feri de un atac din partea altui jucător
+
+
+### Interacțiunea dintre jucători și mediu
+* Detectarea coliziunii dintre jucători și arena: jucătorii se mișcă pe pământ și jucătorii nu se pot duce off screen datorită pereților. Atât pământul, cât și pereții sunt transparenți din motive estetice (avem deja imagine de background).
+* Inamici: Bulgări de zăpadă. Un bulgăre de zăpadă care traversează secțiunea inferioară a ecranului de la stânga la dreapta sau de la dreapta la stânga (determinat în mod aleatoriu) apare pe ecran o dată la un interval fix de timp. La detectarea coliziunii cu un jucător, acel jucător va pierde o viață. Coliziunea nu va fi rezolvată (adică bulgărele de zăpadă și jucătorul se pot suprapune). În plus, jucătorul lovit nu se va putea mișca și va fi vulnerabil pentru o perioadă de timp. Jucătorii trebuie să sară peste acești inamici.
+
+
+### Next Steps: To Do
+* Crearea unui meniu pentru configurarea jucătorilor (spre exemplu, numărul de vieți) sau configurarea mediului (spre exemplu, alegerea imaginii de fundal)
+* Crearea opțiunii de a citi inputul dintr-un fișier (tastatura.txt) folosind Command Design Pattern
+* Separarea logicii din clasa Player
+* Animații (mai interesante) pentru atac și lovitură
+
+
+## Cerințe
 
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
@@ -128,4 +184,4 @@ Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
 
 - [SFML](https://github.com/SFML/SFML/tree/2.6.1) (Zlib)
   - [OpenAL](https://openal-soft.org/) (LGPL): din cauza licenței, trebuie distribuită ca shared library
-- adăugați trimiteri către resursele externe care v-au ajutat sau pe care le-ați folosit
+- https://www.youtube.com/watch?v=axIgxBQVBg0&list=PL21OsoBLPpMOO6zyVlxZ4S4hwkY_SLRW9 (SFML 2.4 For Beginners)
