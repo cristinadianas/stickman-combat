@@ -57,6 +57,8 @@ https://github.com/user-attachments/assets/826618c8-3522-4255-9b3a-8c6d5a9ca7f2
 * Crearea opțiunii de a citi inputul dintr-un fișier (tastatura.txt) folosind Command Design Pattern
 * Micșorarea collision box-ului pentru majoritatea obiectelor
 * Separarea logicii din clasa Player
+* Înălțime variabilă aleasă de la care pleacă bulgării
+* Vindecare (heal): poate cu inimi (vieți) care cad în momente aleatorii și din poziții aleatorii (de-a lungul marginii superioare a ecranului) pe care jucătorii le pot colecta (implementat cu coliziuni)
 * Animații (mai interesante) pentru atac și lovitură
 
 
