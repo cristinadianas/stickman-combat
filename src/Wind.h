@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <ctime>
 
-class Wind : MoveableIndicator {
+class Wind : public MoveableIndicator {
 public:
     // Constructor and destructor
     Wind(sf::Texture* texture, sf::Vector2f size, float speed, float cooldown);
