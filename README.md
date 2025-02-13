@@ -10,6 +10,10 @@ Acest proiect reprezintă un joc de tip fighting game 2D scris în C++ și bazat
 Sunt generate arena (backgroundul, pereții, pământul, datele despre jucători (numărul de vieți rămase), vântul etc.) și cei doi jucători. Cei doi jucători au un număr limitat de vieți. Un jucător pierde o viață atunci când este atacat cu succes de celălalt jucător sau atunci când este lovit de un bulgăre de zăpadă. După ce unul dintre jucători și-a pierdut toate viețile acesta va fi considerat pierzător, iar oponentul lui va fi considerat câștigător. Ulterior sfârșitului unei runde, există opțiunea de a alege a juca din nou. 
 
 
+### Demo
+https://github.com/user-attachments/assets/826618c8-3522-4255-9b3a-8c6d5a9ca7f2
+
+
 ### Acțiuni posibile ale unui jucător
 * Mișcare stânga-dreapta
 * Săritură
@@ -51,6 +55,7 @@ Sunt generate arena (backgroundul, pereții, pământul, datele despre jucători
 ### Next Steps: To Do
 * Crearea unui meniu pentru configurarea jucătorilor (spre exemplu, numărul de vieți) sau configurarea mediului (spre exemplu, alegerea imaginii de fundal)
 * Crearea opțiunii de a citi inputul dintr-un fișier (tastatura.txt) folosind Command Design Pattern
+* Micșorarea collision box-ului pentru majoritatea obiectelor
 * Separarea logicii din clasa Player
 * Animații (mai interesante) pentru atac și lovitură
 
