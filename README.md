@@ -24,8 +24,6 @@ https://github.com/user-attachments/assets/826618c8-3522-4255-9b3a-8c6d5a9ca7f2
 * v0.1 
   * Jucătorul 1 (jucătorul din stânga): stânga = A, dreapta = D, sus (sari) = W, jos (ferește-te) = S, atacă = E
   * Jucătorul 2 (jucătorul din dreapta): stânga = H, dreapta = K, sus (sari) = U, jos (ferește-te) = J, atacă = I
-  * Ieși din joc = Escape (sau se poate închide fereastra)
-  * Joacă din nou (valabil la sfârșitul unui joc) = Space (sau se poate apăsa butonul de pe ecran marcat "Replay")
 
 * v0.2.1 , v0.2.2, v0.3, v0.4.1
   * Jucătorul 1 (jucătorul din stânga): stânga = A, dreapta = D, sus (sari) = W, jos (ferește-te) = S, atacă = LShift
