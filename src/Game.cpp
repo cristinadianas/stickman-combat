@@ -46,6 +46,8 @@ Game::~Game() {
 }
 
 void Game::Run() {
+    std::cout << *fight;
+
     while (window.isOpen()) {
         deltaTime = clock.restart().asSeconds();
         if (deltaTime > MAX_SWITCH_TIME)

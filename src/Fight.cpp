@@ -27,14 +27,10 @@ void Fight::Update() {
 }
 
 std::ostream& operator<<(std::ostream& os, const Fight& fight) {
-    os << "Fight between " << fight.player1.GetName().toAnsiString() << " and "
-       << fight.player2.GetName().toAnsiString() << "! ";
+    os << "---Fight between---\n\n";
 
-    if (fight.player1.RemainingHearts() > fight.player2.RemainingHearts())
-        os << fight.player1.GetName().toAnsiString() << " is more likely to win!";
-    else if (fight.player1.RemainingHearts() < fight.player2.RemainingHearts())
-        os << fight.player2.GetName().toAnsiString() << " is more likely to win!";
-    else os << "Equal chances to win!\n";
+    os << "Player 1:\n" << fight.player1 << "\n";
+    os << "Player 2:\n" << fight.player2 << "\n";
 
     return os;
 }
