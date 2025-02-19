@@ -22,7 +22,7 @@ public:
     // Checks for collision with another collider
     // On collision, if solve collision is true, the direction vector is updated
     // and the push factor is applied. Otherwise, it just returns true.
-    bool CheckCollision(Collider other, sf::Vector2f &direction, bool solveCollision, float push=1.0f);
+    bool HandleCollision(Collider other, sf::Vector2f &direction, bool solveCollision, float push= 1.0f);
 
     // Operator<<
     friend std::ostream& operator<<(std::ostream& os, const Collider& collider);

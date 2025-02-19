@@ -83,25 +83,25 @@ void Game::SolveCollisions() {
 
     sf::Vector2f direction;
 
-    if (ground->GetCollider().CheckCollision(player1->GetCollider(),direction, true, 1.0f))
+    if (ground->GetCollider().HandleCollision(player1->GetCollider(), direction, true, 1.0f))
         player1->OnCollision(direction);
 
-    if (ground->GetCollider().CheckCollision(player2->GetCollider(), direction, true,  1.0f))
+    if (ground->GetCollider().HandleCollision(player2->GetCollider(), direction, true, 1.0f))
         player2->OnCollision(direction);
 
-    if (leftWall->GetCollider().CheckCollision(player1->GetCollider(), direction, true, 1.0f))
+    if (leftWall->GetCollider().HandleCollision(player1->GetCollider(), direction, true, 1.0f))
         player1->OnCollision(direction);
 
-    if (leftWall->GetCollider().CheckCollision(player2->GetCollider(), direction, true, 1.0f))
+    if (leftWall->GetCollider().HandleCollision(player2->GetCollider(), direction, true, 1.0f))
         player2->OnCollision(direction);
 
-    if (rightWall->GetCollider().CheckCollision(player1->GetCollider(), direction, true, 1.0f))
+    if (rightWall->GetCollider().HandleCollision(player1->GetCollider(), direction, true, 1.0f))
         player1->OnCollision(direction);
 
-    if (rightWall->GetCollider().CheckCollision(player2->GetCollider(), direction, true, 1.0f))
+    if (rightWall->GetCollider().HandleCollision(player2->GetCollider(), direction, true, 1.0f))
         player2->OnCollision(direction);
 
-    if (player1->GetCollider().CheckCollision(player2->GetCollider(), direction, true, 0.5f)) {
+    if (player1->GetCollider().HandleCollision(player2->GetCollider(), direction, true, 0.5f)) {
         player1->OnCollision(-direction);
         player2->OnCollision(direction);
     }

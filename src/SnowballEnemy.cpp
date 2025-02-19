@@ -86,7 +86,7 @@ void SnowballEnemy::SetDirection() {
 void SnowballEnemy::CheckPlayerHit(Player &player) {
     if (!player.IsWinner()) {
         sf::Vector2f direction_;
-        bool colliding = GetCollider().CheckCollision(player.GetCollider(), direction_, false);
+        bool colliding = GetCollider().HandleCollision(player.GetCollider(), direction_, false);
 
         if (colliding && player.SnowballHitCooldownPassed()) {
             player.TakeHit();
