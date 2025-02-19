@@ -37,7 +37,10 @@ private:
     // Updates all the entities
     void Update();
 
-    // Checks collisions between all the entities
+    // Handles collisions between the players and the platform
+    static void HandlePlatformCollisions(Player* player, const std::vector<Collider*>& platforms, float push);
+
+    // Solves collisions between all the entities
     void SolveCollisions();
 
     // Checks for a winner and updates it

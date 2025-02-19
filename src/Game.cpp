@@ -76,6 +76,14 @@ void Game::Update() {
     }
 }
 
+void Game::HandlePlatformCollisions(Player* player, const std::vector<Collider*>& platforms, float push) {
+    sf::Vector2f direction;
+    for (auto* collider : platforms) {
+        if (collider->HandleCollision(player->GetCollider(), direction, true, push))
+            player->OnCollision(direction);
+    }
+}
+
 void Game::SolveCollisions() {
     // Reset the ground state for both players.
     player1->SetIsOnGround(false);
@@ -83,23 +91,18 @@ void Game::SolveCollisions() {
 
     sf::Vector2f direction;
 
-    if (ground->GetCollider().HandleCollision(player1->GetCollider(), direction, true, 1.0f))
-        player1->OnCollision(direction);
+    Collider groundCollider   = ground->GetCollider();
+    Collider leftWallCollider = leftWall->GetCollider();
+    Collider rightWallCollider = rightWall->GetCollider();
 
-    if (ground->GetCollider().HandleCollision(player2->GetCollider(), direction, true, 1.0f))
-        player2->OnCollision(direction);
+    std::vector<Collider*> platformColliders = {
+            &groundCollider,
+            &leftWallCollider,
+            &rightWallCollider
+    };
 
-    if (leftWall->GetCollider().HandleCollision(player1->GetCollider(), direction, true, 1.0f))
-        player1->OnCollision(direction);
-
-    if (leftWall->GetCollider().HandleCollision(player2->GetCollider(), direction, true, 1.0f))
-        player2->OnCollision(direction);
-
-    if (rightWall->GetCollider().HandleCollision(player1->GetCollider(), direction, true, 1.0f))
-        player1->OnCollision(direction);
-
-    if (rightWall->GetCollider().HandleCollision(player2->GetCollider(), direction, true, 1.0f))
-        player2->OnCollision(direction);
+    HandlePlatformCollisions(player1.get(), platformColliders, 1.0f);
+    HandlePlatformCollisions(player2.get(), platformColliders, 1.0f);
 
     if (player1->GetCollider().HandleCollision(player2->GetCollider(), direction, true, 0.5f)) {
         player1->OnCollision(-direction);
