@@ -187,7 +187,6 @@ void Player::Update(float deltaTime) {
 
     animation.Update(row, deltaTime, faceRight);
     body.setTextureRect(animation.GetUVRect());
-    return;
 }
 
 void Player::ResetHealth() {
@@ -348,10 +347,6 @@ void Player::OnCollision(sf::Vector2f direction) {
         // Collision on the top
         velocity.y = 0.0f;
     }
-}
-
-sf::String Player::GetName() const {
-    return name;
 }
 
 void Player::ClearPlayers() {

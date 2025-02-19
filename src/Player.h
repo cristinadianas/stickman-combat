@@ -94,9 +94,6 @@ public:
     // Handles collision response
     void OnCollision(sf::Vector2f direction);
 
-    // Returns the player's name
-    sf::String GetName() const;
-
     // Deletes the players
     static void ClearPlayers();
 
