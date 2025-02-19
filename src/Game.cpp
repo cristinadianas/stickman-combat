@@ -191,10 +191,10 @@ void Game::CheckEvents() {
                 break;
             case sf::Event::MouseButtonPressed:
                 if(GameFinished()) {
-                    if (evnt.mouseButton.x <= replayBannerPosition.x + replayBannerSize.x / 2.0f &&
-                        evnt.mouseButton.x >= replayBannerPosition.x - replayBannerSize.x / 2.0f &&
-                        evnt.mouseButton.y <= replayBannerPosition.y + replayBannerSize.y / 2.0f &&
-                        evnt.mouseButton.y >= replayBannerPosition.y - replayBannerSize.y / 2.0f)
+                    if ((float) evnt.mouseButton.x <= replayBannerPosition.x + replayBannerSize.x / 2.0f &&
+                        (float) evnt.mouseButton.x >= replayBannerPosition.x - replayBannerSize.x / 2.0f &&
+                        (float) evnt.mouseButton.y <= replayBannerPosition.y + replayBannerSize.y / 2.0f &&
+                        (float) evnt.mouseButton.y >= replayBannerPosition.y - replayBannerSize.y / 2.0f)
                         ResetGame();
                 }
                 break;
