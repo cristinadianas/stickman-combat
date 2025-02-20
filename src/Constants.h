@@ -102,6 +102,9 @@ static const sf::Vector2f winnerBannerSize(225.0f, 225.0f);
 static const sf::Vector2f windSize(200.0f, 100.0f);
 static const sf::Vector2f fightBannerSize(200.0f, 200.0f);
 static const sf::Vector2f fightBannerPosition(WINDOW_WIDTH / 2.0f, 50.0f);
+constexpr int FIGHT_BANNER_IDX = 0;
+constexpr int WINNER_BANNER_IDX = 1;
+constexpr int REPLAY_BANNER_IDX = 2;
 
 
 // FRAME REFRESH

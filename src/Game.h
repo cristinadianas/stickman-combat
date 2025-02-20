@@ -79,16 +79,13 @@ private:
 
     std::unique_ptr<SnowballEnemy> snowballEnemy;
 
-    std::unique_ptr<Indicator> fightBanner;
-    std::unique_ptr<MoveableIndicator> winnerBanner;
-
     std::unique_ptr<Wind> wind;
 
     std::unique_ptr<Platform> ground;
     std::unique_ptr<Platform> leftWall;
     std::unique_ptr<Platform> rightWall;
-
-    std::unique_ptr<Indicator> replayBanner;
+    // [0] fightBanner, [1] winnerBanner, [2] replayBanner
+    std::vector<std::unique_ptr<Indicator>> indicators;
 
     sf::Clock clock;
     float deltaTime;

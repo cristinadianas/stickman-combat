@@ -11,10 +11,6 @@ Game::Game(const sf::String& player1name_, const sf::String& player2name_)
           winner(nullptr),
           loser(nullptr),
           snowballEnemy(GameObjectFactory::CreateSnowballEnemy(&graphicResources.GetSnowballTexture())),
-          fightBanner(GameObjectFactory::CreateIndicator(&graphicResources.GetFightBannerTexture(),
-                                                         fightBannerSize, fightBannerPosition)),
-          winnerBanner(GameObjectFactory::CreateMoveableIndicator(&graphicResources.GetWinnerBannerTexture(),
-                                                                  winnerBannerSize, defaultPosition)),
           wind(GameObjectFactory::CreateWind(&graphicResources.GetWindTexture(),
                                              windSize, WIND_SPEED, WIND_COOLDOWN)),
           ground(GameObjectFactory::CreatePlatform(&graphicResources.GetTransparentTexture(),
@@ -22,9 +18,7 @@ Game::Game(const sf::String& player1name_, const sf::String& player2name_)
           leftWall(GameObjectFactory::CreatePlatform(&graphicResources.GetTransparentTexture(),
                                                      wallSize, leftWallPosition)),
           rightWall(GameObjectFactory::CreatePlatform(&graphicResources.GetTransparentTexture(),
-                                                      wallSize, rightWallPosition)),
-          replayBanner(GameObjectFactory::CreateIndicator(&graphicResources.GetReplayBannerTexture(),
-                                                          replayBannerSize, replayBannerPosition))
+                                                      wallSize, rightWallPosition))
 {
     try {
         player1 = GameObjectFactory::CreatePlayer(player1name_, true);
@@ -36,6 +30,19 @@ Game::Game(const sf::String& player1name_, const sf::String& player2name_)
     }
 
     fight = std::make_unique<Fight>(*player1, *player2);
+
+    // Fight Banner
+    indicators.push_back(GameObjectFactory::CreateIndicator(&graphicResources.GetFightBannerTexture(),
+                                                            fightBannerSize,
+                                                            fightBannerPosition));
+    // Winner Banner
+    indicators.push_back(GameObjectFactory::CreateMoveableIndicator(&graphicResources.GetWinnerBannerTexture(),
+                                                                    winnerBannerSize,
+                                                                    defaultPosition));
+    // Replay Banner
+    indicators.push_back(GameObjectFactory::CreateIndicator(&graphicResources.GetReplayBannerTexture(),
+                                                            replayBannerSize,
+                                                            replayBannerPosition));
 
     audioResources.PlayBackgroundMusic();
     deltaTime = 0.0f;
@@ -135,6 +142,7 @@ void Game::ResetGame() {
 
 void Game::ShowWinner() {
     sf::Vector2f winnerPosition = winner->GetPosition();
+    auto *winnerBanner = dynamic_cast<MoveableIndicator*>(indicators[WINNER_BANNER_IDX].get());
     winnerBanner->SetPosition(sf::Vector2f(winnerPosition.x, winnerPosition.y - OFFSET_BANNER));
 }
 
@@ -158,9 +166,9 @@ void Game::Draw() {
 
     // Draw wind and banners
     wind->Draw(window);
-    fightBanner->Draw(window);
+    indicators[FIGHT_BANNER_IDX]->Draw(window);
     if (GameFinished())
-        replayBanner->Draw(window);
+        indicators[REPLAY_BANNER_IDX]->Draw(window);
 
     // Draw enemy snowballs
     if(!GameWon())
@@ -170,7 +178,7 @@ void Game::Draw() {
     player1->Draw(window);
     player2->Draw(window);
     if(GameFinished())
-        winnerBanner->Draw(window);
+        indicators[WINNER_BANNER_IDX]->Draw(window);
 
     window.display();
 }
