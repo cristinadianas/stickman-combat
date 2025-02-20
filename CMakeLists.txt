@@ -96,6 +96,7 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/GameObjectFactory.h
         src/Singleton.h
         src/HealthBar.cpp
+        src/GameObjectFactory.cpp
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

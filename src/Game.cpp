@@ -7,31 +7,24 @@ Game::Game()
           player2(GameObjectFactory::CreatePlayer(player2Name, false)),
           winner(nullptr),
           loser(nullptr),
-          snowballEnemy(GameObjectFactory::CreateSnowballEnemy(&graphicResources.GetSnowballTexture())),
-          wind(GameObjectFactory::CreateWind(&graphicResources.GetWindTexture(),
-                                             windSize, WIND_SPEED, WIND_COOLDOWN)),
-          ground(GameObjectFactory::CreatePlatform(&graphicResources.GetTransparentTexture(),
-                                                   groundSize, groundPosition)),
-          leftWall(GameObjectFactory::CreatePlatform(&graphicResources.GetTransparentTexture(),
-                                                     wallSize, leftWallPosition)),
-          rightWall(GameObjectFactory::CreatePlatform(&graphicResources.GetTransparentTexture(),
-                                                      wallSize, rightWallPosition))
+          snowballEnemy(GameObjectFactory::CreateSnowballEnemy()),
+          wind(GameObjectFactory::CreateWind(windSize, WIND_SPEED, WIND_COOLDOWN)),
+          ground(GameObjectFactory::CreatePlatform(groundSize, groundPosition)),
+          leftWall(GameObjectFactory::CreatePlatform(wallSize, leftWallPosition)),
+          rightWall(GameObjectFactory::CreatePlatform(wallSize, rightWallPosition))
 {
     fight = &Fight::getInstance();
     fight->InitializeFight(*player1, *player2);
 
     // Fight Banner
-    indicators.push_back(GameObjectFactory::CreateIndicator(&graphicResources.GetFightBannerTexture(),
-                                                            fightBannerSize,
-                                                            fightBannerPosition));
+    indicators.push_back(std::make_unique<Indicator>(&graphicResources.GetFightBannerTexture(),
+                                                     fightBannerSize,fightBannerPosition));
     // Winner Banner
-    indicators.push_back(GameObjectFactory::CreateMoveableIndicator(&graphicResources.GetWinnerBannerTexture(),
-                                                                    winnerBannerSize,
-                                                                    defaultPosition));
+    indicators.push_back(std::make_unique<MoveableIndicator>(&graphicResources.GetWinnerBannerTexture(),
+                                                             winnerBannerSize,defaultPosition));
     // Replay Banner
-    indicators.push_back(GameObjectFactory::CreateIndicator(&graphicResources.GetReplayBannerTexture(),
-                                                            replayBannerSize,
-                                                            replayBannerPosition));
+    indicators.push_back(std::make_unique<Indicator>(&graphicResources.GetReplayBannerTexture(),
+                                                     replayBannerSize,replayBannerPosition));
 
     audioResources.PlayBackgroundMusic();
     deltaTime = 0.0f;
