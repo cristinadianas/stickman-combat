@@ -93,7 +93,6 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/Game.h
         src/SnowballEnemy.cpp
         src/SnowballEnemy.h
-        src/HealthBarUtils.h
         src/GameObjectFactory.h
         src/Singleton.h
         src/HealthBar.cpp
