@@ -52,7 +52,6 @@ https://github.com/user-attachments/assets/826618c8-3522-4255-9b3a-8c6d5a9ca7f2
 
 ### Next Steps: To Do
 * Crearea unui meniu pentru configurarea jucătorilor (spre exemplu, numărul de vieți) sau configurarea mediului (spre exemplu, alegerea imaginii de fundal)
-* Crearea opțiunii de a citi inputul dintr-un fișier (tastatura.txt) folosind Command Design Pattern
 * Micșorarea collision box-ului pentru majoritatea obiectelor
 * Separarea logicii din clasa Player
 * Înălțime variabilă aleasă de la care pleacă bulgării
