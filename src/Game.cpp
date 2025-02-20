@@ -8,6 +8,8 @@ Game& Game::getInstance(const sf::String& player1name, const sf::String& player2
 
 Game::Game(const sf::String& player1name_, const sf::String& player2name_)
         : window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Stickman Combat", sf::Style::Default),
+          player1(GameObjectFactory::CreatePlayer(player1name_, true)),
+          player2(GameObjectFactory::CreatePlayer(player2name_, false)),
           winner(nullptr),
           loser(nullptr),
           snowballEnemy(GameObjectFactory::CreateSnowballEnemy(&graphicResources.GetSnowballTexture())),
@@ -20,9 +22,6 @@ Game::Game(const sf::String& player1name_, const sf::String& player2name_)
           rightWall(GameObjectFactory::CreatePlatform(&graphicResources.GetTransparentTexture(),
                                                       wallSize, rightWallPosition))
 {
-    player1 = GameObjectFactory::CreatePlayer(player1name_, true);
-    player2 = GameObjectFactory::CreatePlayer(player2name_, false);
-
     fight = std::make_unique<Fight>(*player1, *player2);
 
     // Fight Banner
