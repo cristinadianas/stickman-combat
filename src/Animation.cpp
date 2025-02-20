@@ -1,9 +1,11 @@
 #include "Animation.h"
 #include <cmath>
 
-Animation::Animation(sf::Texture* texture, sf::Vector2i imageCount_, float switchTime_)
+Animation::Animation(sf::Texture* texture, sf::Vector2i imageCount_, float switchTime_, bool repeat_)
         : imageCount(imageCount_),
-          switchTime(switchTime_)
+          switchTime(switchTime_),
+          repeat(repeat_),
+          finished(false)
 {
     if (texture->getSize().x == 0 || texture->getSize().y == 0)
         throw AnimationException("Texture size 0");
@@ -23,6 +25,9 @@ sf::IntRect Animation::GetUVRect() const {
 }
 
 void Animation::Update(int row, float deltaTime, bool faceRight) {
+    if(!repeat && finished)
+        return;
+
     currentImage.y = row;
     totalTime += deltaTime;
 
@@ -30,8 +35,8 @@ void Animation::Update(int row, float deltaTime, bool faceRight) {
         totalTime -= switchTime;
         currentImage.x++;
         if (currentImage.x >= imageCount.x) {
-            // Reset the animation
             currentImage.x = 0;
+            finished = true;
         }
     }
 

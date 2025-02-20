@@ -11,6 +11,10 @@ AudioResourcesManager::AudioResourcesManager() {
         throw ResourceLoadException("../sounds/dying.wav");
     if (!winningSound.openFromFile("../sounds/win.wav"))
         throw ResourceLoadException("../sounds/win.wav");
+    if (!shortBeep.openFromFile("../sounds/short_beep.wav"))
+        throw ResourceLoadException("../sounds/short_beep.wav");
+    if (!longBeep.openFromFile("../sounds/long_beep.wav"))
+        throw ResourceLoadException("../sounds/long_beep.wav");
 
     dyingSound.setVolume(DIE_SOUND_VOLUME);
     winningSound.setVolume(WIN_SOUND_VOLUME);
@@ -22,8 +26,8 @@ AudioResourcesManager::AudioResourcesManager() {
 AudioResourcesManager::~AudioResourcesManager() = default;
 
 void AudioResourcesManager::PlayBackgroundMusic() {
-    backgroundMusic.play();
-    backgroundMusic.setLoop(true);
+    if(backgroundMusic.getStatus() == sf::SoundSource::Stopped)
+        backgroundMusic.play();
 }
 
 sf::Music &AudioResourcesManager::GetHitSound() {
@@ -40,4 +44,12 @@ sf::Music &AudioResourcesManager::GetWinningSound() {
 
 sf::Music &AudioResourcesManager::GetDyingSound() {
     return dyingSound;
+}
+
+sf::Music &AudioResourcesManager::GetShortBeep() {
+    return shortBeep;
+}
+
+sf::Music &AudioResourcesManager::GetLongBeep() {
+    return longBeep;
 }

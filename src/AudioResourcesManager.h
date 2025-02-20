@@ -19,6 +19,8 @@ public:
     sf::Music& GetJumpSound();
     sf::Music& GetWinningSound();
     sf::Music& GetDyingSound();
+    sf::Music& GetShortBeep();
+    sf::Music& GetLongBeep();
 
 private:
     sf::Music backgroundMusic;
@@ -26,6 +28,8 @@ private:
     sf::Music hitSound;
     sf::Music winningSound;
     sf::Music dyingSound;
+    sf::Music shortBeep;
+    sf::Music longBeep;
 };
 
 #endif // OOP_AUDIO_RESOURCES_MANAGER_H

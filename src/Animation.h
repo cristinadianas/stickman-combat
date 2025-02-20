@@ -8,14 +8,14 @@
 class Animation {
 public:
     // Constructor and destructor
-    Animation(sf::Texture* texture, sf::Vector2i imageCount, float switchTime);
+    Animation(sf::Texture* texture, sf::Vector2i imageCount, float switchTime, bool repeat=true);
     ~Animation();
 
     // Getter for the current UV rectangle
     [[nodiscard]] sf::IntRect GetUVRect() const;
 
     // Updates the animation frame based on the row and elapsed time
-    void Update(int row, float deltaTime, bool faceRight = true);
+    void Update(int row, float deltaTime, bool faceRight=true);
 
     // Operator<<
     friend std::ostream& operator<<(std::ostream& os, const Animation& animation);
@@ -26,6 +26,8 @@ private:
     sf::IntRect uvRect;
     float totalTime;
     float switchTime;
+    bool repeat;
+    bool finished;
 };
 
 #endif // OOP_ANIMATION_H

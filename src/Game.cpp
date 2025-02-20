@@ -27,7 +27,6 @@ Game::Game()
     indicators.push_back(std::make_unique<Indicator>(&graphicResources.GetReplayBannerTexture(),
                                                      replayBannerSize,replayBannerPosition));
 
-    audioResources.PlayBackgroundMusic();
     deltaTime = 0.0f;
 }
 
@@ -46,6 +45,8 @@ void Game::Run() {
             countdown->ExecuteCountdown(deltaTime, window);
         else
         {
+            audioResources.PlayBackgroundMusic();
+
             if (deltaTime > MAX_SWITCH_TIME)
                 deltaTime = MAX_SWITCH_TIME;
 
