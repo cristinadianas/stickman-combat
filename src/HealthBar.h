@@ -32,7 +32,7 @@ public:
     // Returns true if the player has no more hearts
     bool IsDead() const;
 
-    // Resets the health
+    // Resets the health to initial configuration
     void ResetHealthBar(HealthBar& newHealthBar, sf::Texture* texture, int nrHearts, sf::Vector2f startPosition, bool goRight);
 
     // Draws the health bar
