@@ -20,14 +20,8 @@ Game::Game(const sf::String& player1name_, const sf::String& player2name_)
           rightWall(GameObjectFactory::CreatePlatform(&graphicResources.GetTransparentTexture(),
                                                       wallSize, rightWallPosition))
 {
-    try {
-        player1 = GameObjectFactory::CreatePlayer(player1name_, true);
-        player2 = GameObjectFactory::CreatePlayer(player2name_, false);
-    }
-    catch (const std::runtime_error &e) {
-        std::cerr << "Error creating players" << e.what() << "\n";
-        window.close();
-    }
+    player1 = GameObjectFactory::CreatePlayer(player1name_, true);
+    player2 = GameObjectFactory::CreatePlayer(player2name_, false);
 
     fight = std::make_unique<Fight>(*player1, *player2);
 

@@ -2,15 +2,15 @@
 
 AudioResourcesManager::AudioResourcesManager() {
     if(!hitSound.openFromFile("../sounds/fist_hit.wav"))
-        throw SoundException("../sounds/fist_hit.wav");
+        throw ResourceLoadException("../sounds/fist_hit.wav");
     if (!backgroundMusic.openFromFile("../sounds/bg_music.wav"))
-        throw SoundException("../sounds/bg_music.wav");
+        throw ResourceLoadException("../sounds/bg_music.wav");
     if (!jumpSound.openFromFile("../sounds/jump.wav"))
-        throw SoundException("../sounds/jump.wav");
+        throw ResourceLoadException("../sounds/jump.wav");
     if (!dyingSound.openFromFile("../sounds/dying.wav"))
-        throw SoundException("../sounds/dying.wav");
+        throw ResourceLoadException("../sounds/dying.wav");
     if (!winningSound.openFromFile("../sounds/win.wav"))
-        throw SoundException("../sounds/win.wav");
+        throw ResourceLoadException("../sounds/win.wav");
 
     dyingSound.setVolume(DIE_SOUND_VOLUME);
     winningSound.setVolume(WIN_SOUND_VOLUME);

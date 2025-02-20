@@ -17,10 +17,10 @@ private:
 };
 
 
-class TextureLoadException : public GameException {
+class ResourceLoadException : public GameException {
 public:
-    explicit TextureLoadException(const std::string& filename)
-            : GameException("Texture Load Error: '" + filename + "\n") {}
+    explicit ResourceLoadException(const std::string& filename)
+            : GameException("Resource Load Error: '" + filename + "\n") {}
 };
 
 
@@ -30,11 +30,10 @@ public:
             : GameException("Animation Error: " + message+ "\n") {}
 };
 
-
-class SoundException : public GameException {
+class RulesException : public GameException {
 public:
-    explicit SoundException(const std::string& message)
-            : GameException("Sound Error: " + message) {}
+    explicit RulesException(const std::string& message)
+            : GameException("Rules Error: " + message+ "\n") {}
 };
 
 #endif //OOP_GAMEEXCEPTIONS_H

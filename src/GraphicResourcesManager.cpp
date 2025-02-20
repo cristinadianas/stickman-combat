@@ -2,23 +2,23 @@
 
 GraphicResourcesManager::GraphicResourcesManager() {
     if (!playerTexture.loadFromFile("../textures/player_texture.png"))
-        throw TextureLoadException("../textures/player_texture.png");
+        throw ResourceLoadException("../textures/player_texture.png");
     if (!transparentTexture.loadFromFile("../textures/transparent_texture.png"))
-        throw TextureLoadException("../textures/transparent_texture.png");
+        throw ResourceLoadException("../textures/transparent_texture.png");
     if (!heartTexture.loadFromFile("../textures/heart_texture.png"))
-        throw TextureLoadException("../textures/heart_texture.png");
+        throw ResourceLoadException("../textures/heart_texture.png");
     if (!fightBannerTexture.loadFromFile("../textures/fight_banner_texture.png"))
-        throw TextureLoadException("../textures/fight_banner_texture.png");
+        throw ResourceLoadException("../textures/fight_banner_texture.png");
     if(!replayBannerTexture.loadFromFile("../textures/replay_banner_texture.png"))
-        throw TextureLoadException("../textures/replay_banner_textures.png");
+        throw ResourceLoadException("../textures/replay_banner_textures.png");
     if (!windTexture.loadFromFile("../textures/wind_texture.png"))
-        throw TextureLoadException("../textures/wind_texture.png");
+        throw ResourceLoadException("../textures/wind_texture.png");
     if (!winnerBannerTexture.loadFromFile("../textures/winner_texture.png"))
-        throw TextureLoadException("../textures/winner_texture.png");
+        throw ResourceLoadException("../textures/winner_texture.png");
     if(!snowballTexture.loadFromFile("../textures/snowball_texture.png"))
-        throw TextureLoadException("..textures/snowball_texture.png");
+        throw ResourceLoadException("..textures/snowball_texture.png");
     if (!backgroundTexture.loadFromFile("../textures/background.png"))
-        throw TextureLoadException("../textures/background.png");
+        throw ResourceLoadException("../textures/background.png");
 }
 
 GraphicResourcesManager::~GraphicResourcesManager() = default;

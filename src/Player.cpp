@@ -10,7 +10,7 @@ std::vector<std::shared_ptr<Player>> Player::players;
 
 std::shared_ptr<Player> Player::CreatePlayer(const std::string& name, bool firstPlayer) {
     if (players.size() >= MAX_PLAYERS)
-        throw std::runtime_error("Maximum number of players reached\n");
+        throw RulesException("Too many players have been created\n");
 
     auto newPlayer = std::shared_ptr<Player>(new Player(name, firstPlayer));
     players.push_back(newPlayer);
