@@ -16,11 +16,12 @@
 #include "GraphicResourcesManager.h"
 #include "AudioResourcesManager.h"
 #include "GameObjectFactory.h"
+#include "Singleton.h"
 
-class Game {
+class Game : public Singleton<Game> {
 public:
     // Singleton: Returns a reference to the single Game instance
-    static Game& getInstance(const sf::String& player1name_, const sf::String& player2name_);
+    static Game& getInstance();
 
     // Main game loop
     void Run();
@@ -31,8 +32,11 @@ public:
 
 private:
     // Constructor and destructor
-    Game(const sf::String& player1name, const sf::String& player2name);
+    Game();
     ~Game();
+
+    // Print game information
+    void PrintGameInfo() const;
 
     // Updates all the entities
     void Update();
@@ -66,6 +70,8 @@ private:
     void CheckEvents();
 
 private:
+    friend class Singleton<Game>;
+
     sf::RenderWindow window;
     GraphicResourcesManager graphicResources;
     AudioResourcesManager audioResources;
@@ -75,7 +81,7 @@ private:
     Player *winner;
     Player *loser;
 
-    std::unique_ptr<Fight> fight;
+    Fight *fight;
 
     std::unique_ptr<SnowballEnemy> snowballEnemy;
 

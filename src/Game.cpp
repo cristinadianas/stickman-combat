@@ -1,15 +1,15 @@
 #include "Game.h"
 #include <iostream>
 
-Game& Game::getInstance(const sf::String& player1name, const sf::String& player2name) {
-    static Game instance(player1name, player2name);
+Game& Game::getInstance() {
+    static Game instance;
     return instance;
 }
 
-Game::Game(const sf::String& player1name_, const sf::String& player2name_)
+Game::Game()
         : window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Stickman Combat", sf::Style::Default),
-          player1(GameObjectFactory::CreatePlayer(player1name_, true)),
-          player2(GameObjectFactory::CreatePlayer(player2name_, false)),
+          player1(GameObjectFactory::CreatePlayer(player1Name, true)),
+          player2(GameObjectFactory::CreatePlayer(player2Name, false)),
           winner(nullptr),
           loser(nullptr),
           snowballEnemy(GameObjectFactory::CreateSnowballEnemy(&graphicResources.GetSnowballTexture())),
@@ -22,7 +22,8 @@ Game::Game(const sf::String& player1name_, const sf::String& player2name_)
           rightWall(GameObjectFactory::CreatePlatform(&graphicResources.GetTransparentTexture(),
                                                       wallSize, rightWallPosition))
 {
-    fight = std::make_unique<Fight>(*player1, *player2);
+    fight = &Fight::getInstance();
+    fight->InitializeFight(*player1, *player2);
 
     // Fight Banner
     indicators.push_back(GameObjectFactory::CreateIndicator(&graphicResources.GetFightBannerTexture(),
@@ -46,8 +47,7 @@ Game::~Game() {
 }
 
 void Game::Run() {
-    std::cout << *fight;
-
+    PrintGameInfo();
     while (window.isOpen()) {
         deltaTime = clock.restart().asSeconds();
         if (deltaTime > MAX_SWITCH_TIME)
@@ -59,6 +59,12 @@ void Game::Run() {
         Update();
         Draw();
     }
+}
+
+void Game::PrintGameInfo() const {
+    printSingletonInfo(*this);
+    std::cout << "\n" << *fight;
+    std::cout << "Fight!\n\n";
 }
 
 void Game::Update() {

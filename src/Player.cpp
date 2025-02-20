@@ -190,7 +190,7 @@ void Player::Update(float deltaTime) {
 }
 
 void Player::ResetHealth() {
-    ResetHealthBar(
+    healthBar.ResetHealthBar(
             healthBar,
             &graphicResources.GetHeartTexture(),
             NR_HEARTS,

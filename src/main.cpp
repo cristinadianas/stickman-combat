@@ -7,7 +7,7 @@
 
 int main() {
     try {
-        Game::getInstance(player1Name, player2Name).Run();
+        Game::getInstance().Run();
     }
 
     catch (const GameException &e) {

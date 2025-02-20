@@ -5,7 +5,7 @@
 #include "Animation.h"
 #include "HealthBar.h"
 #include "Collider.h"
-#include "HealthBarUtils.h"
+#include "HealthBar.h"
 #include "GameExceptions.h"
 #include "Constants.h"
 #include "AudioResourcesManager.h"
@@ -118,7 +118,7 @@ private:
     bool dyingSoundFinished;
     sf::RectangleShape body;
     Animation animation;
-    HealthBar<AnimatedIndicator> healthBar;
+    HealthBar healthBar;
     sf::Vector2f velocity;
     int row;
     static float speed;
