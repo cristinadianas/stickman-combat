@@ -7,6 +7,7 @@ Game::Game()
           player2(GameObjectFactory::CreatePlayer(player2Name, false)),
           winner(nullptr),
           loser(nullptr),
+          countdown(GameObjectFactory::CreateCountdown()),
           snowballEnemy(GameObjectFactory::CreateSnowballEnemy()),
           wind(GameObjectFactory::CreateWind(windSize, WIND_SPEED, WIND_COOLDOWN)),
           ground(GameObjectFactory::CreatePlatform(groundSize, groundPosition)),
@@ -38,14 +39,21 @@ void Game::Run() {
     PrintGameInfo();
     while (window.isOpen()) {
         deltaTime = clock.restart().asSeconds();
-        if (deltaTime > MAX_SWITCH_TIME)
-            deltaTime = MAX_SWITCH_TIME;
 
-        CheckWinner();
         CheckEvents();
-        SolveCollisions();
-        Update();
-        Draw();
+
+        if(countdown->InCountdownSequence())
+            countdown->ExecuteCountdown(deltaTime, window);
+        else
+        {
+            if (deltaTime > MAX_SWITCH_TIME)
+                deltaTime = MAX_SWITCH_TIME;
+
+            CheckWinner();
+            SolveCollisions();
+            Update();
+            Draw();
+        }
     }
 }
 

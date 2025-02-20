@@ -19,6 +19,8 @@ GraphicResourcesManager::GraphicResourcesManager() {
         throw ResourceLoadException("..textures/snowball_texture.png");
     if (!backgroundTexture.loadFromFile("../textures/background.png"))
         throw ResourceLoadException("../textures/background.png");
+    if (!countdownTexture.loadFromFile("../textures/countdown_texture.png"))
+        throw ResourceLoadException("../textures/countdown_texture.png");
 }
 
 GraphicResourcesManager::~GraphicResourcesManager() = default;
@@ -53,6 +55,10 @@ sf::Texture& GraphicResourcesManager::GetWinnerBannerTexture() {
 
 sf::Texture& GraphicResourcesManager::GetSnowballTexture() {
     return snowballTexture;
+}
+
+sf::Texture& GraphicResourcesManager::GetCountdownTexture() {
+    return countdownTexture;
 }
 
 sf::Sprite GraphicResourcesManager::GetScaledBackgroundSprite(const sf::Vector2u& windowSize) const {

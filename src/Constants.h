@@ -87,6 +87,15 @@ static const sf::Vector2f replayBannerSize(REPLAY_BUTTON_WIDTH, REPLAY_BUTTON_HE
 static const sf::Vector2f replayBannerPosition(WINDOW_WIDTH / 2.0f, 100.0f);
 
 
+// COUNTDOWN PARAMETERS
+static const sf::Vector2f countdownPosition(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f - 100.0f);
+static const sf::Vector2f countdownSize(std::min(WINDOW_WIDTH, WINDOW_HEIGHT) / 2.0f, std::min(WINDOW_WIDTH, WINDOW_HEIGHT) / 2.0f);
+constexpr float COUNTDOWN_DURATION = 5.0f;
+constexpr int NR_FRAMES_COUNTDOWN = 5;
+constexpr int NR_ROWS_COUNTDOWN = 1;
+constexpr float SWITCHTIME_COUNTDOWN = 1.0f;
+
+
 // SNOWBALL PARAMETERS
 static const sf::Vector2i imageCountSnowball(6, 1);
 constexpr float SWITCHTIME_SNOWBALL = 0.2f;

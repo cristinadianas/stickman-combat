@@ -24,3 +24,8 @@ std::unique_ptr<SnowballEnemy> GameObjectFactory::CreateSnowballEnemy() {
     return std::make_unique<SnowballEnemy>(&graphicResources.GetSnowballTexture(),
                                            imageCountSnowball, SWITCHTIME_SNOWBALL, snowballSize);
 }
+
+std::unique_ptr<Countdown> GameObjectFactory::CreateCountdown() {
+    auto& graphicResources = GetGraphicResources();
+    return std::make_unique<Countdown>(&graphicResources.GetCountdownTexture(), countdownSize, countdownPosition);
+}

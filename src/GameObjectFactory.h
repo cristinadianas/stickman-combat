@@ -7,6 +7,7 @@
 #include "Platform.h"
 #include "Wind.h"
 #include "SnowballEnemy.h"
+#include "Countdown.h"
 #include "GraphicResourcesManager.h"
 #include "Constants.h"
 
@@ -24,7 +25,10 @@ public:
     // Creates a Snowball Enemy
     static std::unique_ptr<SnowballEnemy> CreateSnowballEnemy();
 
-    // Returns graphic manager
+    // Create Countdown
+    static std::unique_ptr<Countdown> CreateCountdown();
+
+    // Returns Graphic Manager
     static GraphicResourcesManager& GetGraphicResources();
 };
 

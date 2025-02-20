@@ -80,6 +80,7 @@ private:
 
     Fight *fight;
 
+    std::unique_ptr<Countdown> countdown;
     std::unique_ptr<SnowballEnemy> snowballEnemy;
 
     std::unique_ptr<Wind> wind;
