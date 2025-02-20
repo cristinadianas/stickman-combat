@@ -14,6 +14,8 @@ Countdown::Countdown(sf::Texture* texture, sf::Vector2f size, sf::Vector2f posit
     body.setTextureRect(animation.GetUVRect());
 }
 
+Countdown::~Countdown() = default;
+
 void Countdown::Update(float deltaTime) {
     UpdateTotalTime(deltaTime);
     animation.Update(0, deltaTime,true);

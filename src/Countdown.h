@@ -12,7 +12,7 @@ class Countdown : public Indicator {
 public:
     // Constructor and destructor
     Countdown(sf::Texture* texture, sf::Vector2f size, sf::Vector2f position);
-    ~Countdown()=default;
+    ~Countdown() override;
 
     // Update animation
     void Update(float deltaTime);
