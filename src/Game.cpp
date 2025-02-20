@@ -1,11 +1,6 @@
 #include "Game.h"
 #include <iostream>
 
-Game& Game::getInstance() {
-    static Game instance;
-    return instance;
-}
-
 Game::Game()
         : window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Stickman Combat", sf::Style::Default),
           player1(GameObjectFactory::CreatePlayer(player1Name, true)),

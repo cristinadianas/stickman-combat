@@ -20,9 +20,6 @@
 
 class Game : public Singleton<Game> {
 public:
-    // Singleton: Returns a reference to the single Game instance
-    static Game& getInstance();
-
     // Main game loop
     void Run();
 

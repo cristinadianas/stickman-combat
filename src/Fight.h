@@ -8,10 +8,7 @@
 
 class Fight : public Singleton<Fight> {
 public:
-    // Singleton: Returns a reference to the single Fight instance
-    static Fight& getInstance();
-
-    // Inițialize fight with two players
+    // Initialize fight with two players
     void InitializeFight(Player& player1, Player& player2);
 
     // Updates the fight by processing attacks between the two players
